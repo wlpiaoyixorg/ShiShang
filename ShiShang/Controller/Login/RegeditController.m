@@ -7,19 +7,35 @@
 //
 
 #import "RegeditController.h"
+#import "UserService.h"
+#import "EntityUser.h"
 
 @interface RegeditController (){
+    CGRect rectLogin;
 }
-@property (nonatomic) CGRect rectVBI;
-@property (nonatomic) CGRect rectVVD;
+
+@property (nonatomic) CGRect rectKeyBorde;
+@property (strong, nonatomic) UserService *userService;
+
 @property (strong, nonatomic) IBOutlet UIView *viewBaseInfo;
 @property (strong, nonatomic) IBOutlet UIView *viewValidate;
+@property (strong, nonatomic) IBOutlet UIView *viewInfo;
+@property (strong, nonatomic) IBOutlet UIView *viewLogin;
+
+
 @property (strong, nonatomic) IBOutlet UITextField *textFieldUserName;
 @property (strong, nonatomic) IBOutlet UITextField *textFieldPassword;
 @property (strong, nonatomic) IBOutlet UITextField *textFieldPassword2;
 @property (strong, nonatomic) IBOutlet UITextField *textFieldValidate;
+@property (strong, nonatomic) IBOutlet UITextField *textFieldNikeName;
+@property (strong, nonatomic) IBOutlet UITextField *textFieldEmail;
+
+
+
 @property (strong, nonatomic) IBOutlet UIButton *buttonValidate;
 @property (strong, nonatomic) IBOutlet UIButton *buttonRegedit;
+@property (strong, nonatomic) IBOutlet UIButton *buttonInfo;
+@property (strong, nonatomic) IBOutlet UIButton *buttonShowTreaty;
 
 @end
 
@@ -29,56 +45,108 @@
     [super setTitle:@"注 册"];
     [super viewDidLoad];
     
+    _userService = [UserService new];
+    
     [_viewBaseInfo setCornerRadiusAndBorder:5 BorderWidth:0.5 BorderColor:[self.dicskin getSkinColor:@"bordercolordefault"]];
     [_viewValidate setCornerRadiusAndBorder:5 BorderWidth:0.5 BorderColor:[self.dicskin getSkinColor:@"bordercolordefault"]];
+    [_viewInfo setCornerRadiusAndBorder:5 BorderWidth:0.5 BorderColor:[self.dicskin getSkinColor:@"bordercolordefault"]];
     [_textFieldPassword setCornerRadiusAndBorder:0 BorderWidth:0.5 BorderColor:[self.dicskin getSkinColor:@"bordercolordefault"]];
+    [_textFieldNikeName setCornerRadiusAndBorder:0 BorderWidth:0.5 BorderColor:[self.dicskin getSkinColor:@"bordercolordefault"]];
     
     
     _viewValidate.backgroundColor = [[SkinDictionary getSingleInstance] getSkinColor:@"textfiledview_bg_color"];
     _viewBaseInfo.backgroundColor = [[SkinDictionary getSingleInstance] getSkinColor:@"textfiledview_bg_color"];
+    _viewInfo.backgroundColor = [[SkinDictionary getSingleInstance] getSkinColor:@"textfiledview_bg_color"];
+    
+    [_buttonRegedit addTarget:self action:@selector(onclickRegedit)];
+    [_buttonInfo addTarget:self action:@selector(onclickInfo)];
+    
+    
+    _textFieldEmail.delegate =
+    _textFieldNikeName.delegate =
+    _textFieldPassword.delegate =
+    _textFieldPassword2.delegate =
+    _textFieldUserName.delegate =
+    _textFieldValidate.delegate = self;
     
     __weak typeof(self) weakself = self;
     [super setSELShowKeyBoardStart:^{
-        weakself.viewBaseInfo.frame = weakself.rectVBI;
-        weakself.viewValidate.frame = weakself.rectVVD;
+        
     } End:^(CGRect keyBoardFrame) {
-        CGRect r = weakself.rectVBI;
-        CGRect r2 = weakself.rectVVD;
-        float offy = r2.origin.y+r2.size.height-keyBoardFrame.origin.y;
-        if (offy > 0) {
-            r.origin.y -= offy;
-            r2.origin.y -= offy;
+        weakself.rectKeyBorde = keyBoardFrame;
+        UITextField *tf = [weakself getResonderTextField];
+        if (!tf) {
+            return ;
         }
-        weakself.viewBaseInfo.frame = r;
-        weakself.viewValidate.frame = r2;
+        CGPoint p = [tf getAbsoluteOrigin:weakself.view];
+        float offy = p.y+tf.frame.size.height+keyBoardFrame.size.height-weakself.view.frame.size.height;
+        if (offy>0) {
+            CGRect r = weakself.view.frame;
+            r.origin.y = -offy;
+            weakself.view.frame = r;
+        }
     }];
     [super setSELHiddenKeyBoardBefore:^{
         
     } End:^(CGRect keyBoardFrame) {
-        weakself.viewBaseInfo.frame = weakself.rectVBI;
-        weakself.viewValidate.frame = weakself.rectVVD;
-        
+        CGRect r = weakself.view.frame;
+        r.origin.y = 0;
+        weakself.view.frame = r;
     }];
+    
+    rectLogin.origin.x = rectLogin.origin.y = 0;
     // Do any additional setup after loading the view from its nib.
+}
+-(void) viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    if (rectLogin.origin.x==0&&rectLogin.origin.y == 0) {
+        rectLogin = self.viewLogin.frame;
+        [self onclickInfo];
+    }
+    
 }
 -(void) viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    self.rectVBI = self.viewBaseInfo.frame;
-    self.rectVVD = self.viewValidate.frame;
-    
+}
+
+-(void) onclickInfo{
+    [_textFieldEmail resignFirstResponder];
+    [_textFieldNikeName resignFirstResponder];
+    [UIView animateWithDuration:0.2f animations:^{
+        CGRect r;
+        if (self.viewInfo.hidden) {
+            r = rectLogin;
+            self.viewInfo.hidden = NO;
+            self.viewInfo.alpha = 1;
+            self.viewLogin.frame = r;
+        }else{
+            r = self.viewInfo.frame;
+            r.size = self.viewLogin.frame.size;
+            self.viewInfo.hidden = YES;
+            self.viewInfo.alpha = 0;
+            self.viewLogin.frame = r;
+        }
+        
+    }];
 }
 
 -(void) onclickRegedit{
-    NSString *userName = _textFieldUserName.text;
-    NSString *passowrd = _textFieldPassword.text;
+    [self resignFirstResponder];
+    EntityUser *user = [EntityUser new];
+    user.loginName = _textFieldUserName.text;
+    user.phoneNumber = user.loginName;
+    user.plainPassword =  _textFieldPassword.text;
     NSString *passowrd2 = _textFieldPassword2.text;
+    if ([NSString isEnabled:_textFieldNikeName.text]) {
+        user.name = _textFieldNikeName.text;
+    }
     
-    if (![NSString isEnabled:userName]) {
+    if (![NSString isEnabled:user.phoneNumber]) {
         PopUpDialogView *pdv = [PopUpDialogView initWithTitle:@"提示" message:@"请输入手机号!" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
         [pdv show];
         return;
     }
-    if (![NSString isEnabled:passowrd]) {
+    if (![NSString isEnabled:user.plainPassword]) {
         PopUpDialogView *pdv = [PopUpDialogView initWithTitle:@"提示" message:@"请输入密码!" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
         [pdv show];
         return;
@@ -88,11 +156,16 @@
         [pdv show];
         return;
     }
-    if(![passowrd isEqualToString:passowrd2]){
+    if(![user.plainPassword isEqualToString:passowrd2]){
         PopUpDialogView *pdv = [PopUpDialogView initWithTitle:@"提示" message:@"两次密码出入不一致!" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
         [pdv show];
         return;
     }
+    [_userService regesiterWithUser:user success:^(id data, NSDictionary *userInfo) {
+        
+    } faild:^(id data, NSDictionary *userInfo) {
+        
+    }];
     
 }
 
@@ -100,11 +173,62 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+
+#pragma ==> <UITextFieldDelegate>
+- (BOOL)textFieldShouldReturn:(UITextField *)textField{
+    if (_textFieldEmail.isFirstResponder) {
+        [self onclickRegedit];
+    }else if (_textFieldUserName.isFirstResponder) {
+        [_textFieldPassword becomeFirstResponder];
+    }else if (_textFieldPassword.isFirstResponder) {
+        [_textFieldPassword2 becomeFirstResponder];
+    }else if (_textFieldPassword2.isFirstResponder) {
+        [_textFieldValidate becomeFirstResponder];
+    }else if (_textFieldValidate.isFirstResponder) {
+        if (self.viewInfo.hidden) {
+            [self onclickRegedit];
+        }else{
+            [_textFieldNikeName becomeFirstResponder];
+        }
+    }else if (_textFieldNikeName.isFirstResponder) {
+        [_textFieldEmail becomeFirstResponder];
+    }
+    [UIView animateWithDuration:0.3f animations:^{
+        self->showEnd(self.rectKeyBorde);
+    }];
+    return YES;
+}
+#pragma <==
+
+-(UITextField*) getResonderTextField{
+    if (_textFieldEmail.isFirstResponder) {
+        return _textFieldEmail;
+    }
+    if (_textFieldUserName.isFirstResponder) {
+        return _textFieldUserName;
+    }
+    if (_textFieldPassword.isFirstResponder) {
+        return _textFieldPassword;
+    }
+    if (_textFieldPassword2.isFirstResponder) {
+        return _textFieldPassword2;
+    }
+    if (_textFieldValidate.isFirstResponder) {
+        return _textFieldValidate;
+    }
+    if (_textFieldNikeName.isFirstResponder) {
+        return _textFieldNikeName;
+    }
+    return nil;
+}
 -(BOOL) resignFirstResponder{
     [_textFieldUserName resignFirstResponder];
     [_textFieldPassword resignFirstResponder];
     [_textFieldPassword2 resignFirstResponder];
     [_textFieldValidate resignFirstResponder];
+    [_textFieldNikeName resignFirstResponder];
+    [_textFieldEmail resignFirstResponder];
     return [super resignFirstResponder];
 }
 

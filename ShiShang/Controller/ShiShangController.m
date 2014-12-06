@@ -18,6 +18,7 @@
     if ([NSString isEnabled:super.title]) {
         [self setTitle:super.title];
     }
+    self.view.backgroundColor = [UIColor whiteColor];
     [_topView.buttonReback addTarget:self action:@selector(backPreviousController)];
 }
 -(void) setTitle:(NSString *)title{

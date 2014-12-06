@@ -8,8 +8,10 @@
 
 #import <Foundation/Foundation.h>
 #import "BaseService.h"
+#import "EntityUser.h"
 
 @interface UserService : BaseService
 
 -(void) loginWithUserName:(NSString*) userName password:(NSString*) password success:(CallBackNetWorkHTTP) success faild:(CallBackNetWorkHTTP) faild;
+-(void) regesiterWithUser:(EntityUser*) user success:(CallBackNetWorkHTTP) success faild:(CallBackNetWorkHTTP) faild;
 @end

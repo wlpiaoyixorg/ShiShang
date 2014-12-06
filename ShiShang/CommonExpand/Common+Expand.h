@@ -7,10 +7,12 @@
 //
 
 
-#define BASEURL @"http://127.0.0.1"
+#define BASEURL @"http://115.29.186.152"
 
 #import <Foundation/Foundation.h>
 #import "Common.h"
+#import "ConfigManage+Expand.h"
+
 @interface Common(Expand)
 +(id) getNetWorkImpl;
 +(void) setRootController:(UIViewController*) c window:(UIWindow*) window;

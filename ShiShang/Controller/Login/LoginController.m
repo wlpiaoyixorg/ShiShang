@@ -27,6 +27,7 @@
 @property (strong, nonatomic) IBOutlet UIButton *buttonLogin;
 @property (strong, nonatomic) IBOutlet UIButton *buttonEditPassword;
 
+@property (strong, nonatomic) UserService *userService;
 
 @end
 
@@ -36,14 +37,14 @@
     [self setTitle:@"登  录"];
     [super viewDidLoad];
     [super showReturnButton:NO];
-    
+    _userService = [UserService new];
     
     
     [self.viewField setCornerRadiusAndBorder:5 BorderWidth:0.5 BorderColor:[self.dicskin getSkinColor:@"bordercolordefault"]];
     [self.textFieldAccount setCornerRadiusAndBorder:0 BorderWidth:0.5 BorderColor:[self.dicskin getSkinColor:@"bordercolordefault"]];
     [self.textFieldPassword setCornerRadiusAndBorder:0 BorderWidth:0.5 BorderColor:[self.dicskin getSkinColor:@"bordercolordefault"]];
     self.viewField.backgroundColor = [[SkinDictionary getSingleInstance] getSkinColor:@"textfiledview_bg_color"];
-    
+    self.textFieldPassword.delegate = self;
     
     [_buttonLogin addTarget:self action:@selector(onclickLogin)];
     [_buttonRegedit addTarget:self action:@selector(onclickRegedit)];
@@ -84,11 +85,10 @@
 }
 
 -(void) onclickLogin{
-    
+    [self resignFirstResponder];
     
     NSString *userName = self.textFieldAccount.text;
     NSString *password = self.textFieldPassword.text;
-    
     
     if (![NSString isEnabled:userName]) {
         PopUpDialogView *pdv = [PopUpDialogView initWithTitle:@"提示" message:@"请输入手机号!" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
@@ -101,20 +101,35 @@
         return;
     }
     [ActivityIndicatorView showActivityIndicator:nil];
-    [[UserService new] loginWithUserName:userName password:password success:^(id data, NSDictionary *userInfo) {
+    [_userService loginWithUserName:userName password:password success:^(id data, NSDictionary *userInfo) {
         [ActivityIndicatorView hideActivityIndicator];
+        if (!data) {
+            [Common showMessage:@"数据异常" Title:nil];
+        }else{
+            [ConfigManage setLoginUser:data];
+            [Common setNavigationController: [[MainController alloc] initWithNibName:@"MainController" bundle:nil] window:[Common getWindow]];
+            [Common setNavigationBarHidden:NO];
+            [Common getWindow].backgroundColor = [[SkinDictionary getSingleInstance] getSkinColor:@"window_bg_color"];
+        }
     } faild:^(id data, NSDictionary *userInfo) {
-        
-        [Common setNavigationController: [[MainController alloc] initWithNibName:@"MainController" bundle:nil] window:[Common getWindow]];
-        [Common setNavigationBarHidden:NO];
-        [Common getWindow].backgroundColor = [[SkinDictionary getSingleInstance] getSkinColor:@"window_bg_color"];
         [ActivityIndicatorView hideActivityIndicator];
+        
     }];
 }
 -(void) onclickEditPassword{
     EditPasswordController *epc = [[EditPasswordController alloc] initWithNibName:@"EditPasswordController" bundle:nil];
     [super goNextController:epc];
 }
+#pragma ==> <UITextFieldDelegate>
+- (BOOL)textFieldShouldReturn:(UITextField *)textField{
+    if (textField==_textFieldPassword) {
+        [self onclickLogin];
+    }
+    return YES;
+}
+#pragma <==
+
+
 -(BOOL) resignFirstResponder{
     [_textFieldAccount resignFirstResponder];
     [_textFieldPassword resignFirstResponder];

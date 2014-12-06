@@ -8,11 +8,20 @@
 
 #import "BaseService.h"
 #import "FDEntityManager.h"
+#import "EntityFood.h"
+
+typedef enum{
+    foodAutoQuery,
+    foodNetQuery,
+    foodDatabaseQuery
+    
+} EnumFoodQueryType;
+
 
 @interface FoodService : BaseService
 
 @property (nonatomic,readonly) FDEntityManager *em;
 
--(NSArray*) queryAllFood;
+-(void) queryAllFoodByType:(EnumFoodQueryType) types success:(CallBackNetWorkHTTP) success faild:(CallBackNetWorkHTTP) faild;
 
 @end

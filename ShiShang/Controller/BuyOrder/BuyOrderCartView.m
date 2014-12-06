@@ -25,7 +25,6 @@
     _tableViewMenu.dataSource = self;
     UINib *nib = [UINib nibWithNibName:@"BuyOrderMenuCell" bundle:nil];
     [_tableViewMenu registerNib:nib forCellReuseIdentifier:@"BuyOrderMenuCell"];
-    [self addTarget:self action:@selector(onclick)];
 }
 -(void) setArrayData:(NSMutableArray *) arrayData{
     _arrayData = arrayData;
@@ -74,7 +73,6 @@
 -(void) setDeskCode:(NSString *)deskCode{
     self.textFieldDesk.text = deskCode;
 }
--(void) onclick{}
 -(BOOL) resignFirstResponder{
     [_textFieldDesk resignFirstResponder];
     return [super resignFirstResponder];

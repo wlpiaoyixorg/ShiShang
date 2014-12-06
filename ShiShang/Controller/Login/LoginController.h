@@ -8,5 +8,5 @@
 
 #import "ShiShangController.h"
 
-@interface LoginController : ShiShangController
+@interface LoginController : ShiShangController<UITextFieldDelegate>
 @end

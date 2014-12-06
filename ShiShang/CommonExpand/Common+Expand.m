@@ -25,7 +25,10 @@ static FDEntityManager *em;
 +(id) getNetWorkImpl{
     NetWorkHTTP *nwh = [NetWorkHTTP new];
     [nwh setHttpEncoding:NSUTF8StringEncoding];
-    [nwh addRequestHeadValue:@{@"content-type":@"application/x-www-form-urlencoded"}];
+    [nwh addRequestHeadValue:@{@"Content-Type":@"application/json"}];
+    [nwh addRequestHeadValue:@{@"Connection":@"keep-alive"}];
+    [nwh addRequestHeadValue:@{@"Charset":@"UTF-8"}];
+//    [nwh addRequestHeadValue:@{@"content-type":@"application/x-www-form-urlencoded"}];
     return nwh;
 }
 +(void) setRootController:(UIViewController*) c window:(UIWindow*) window{

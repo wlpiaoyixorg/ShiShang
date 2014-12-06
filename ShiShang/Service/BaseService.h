@@ -6,8 +6,15 @@
 //  Copyright (c) 2014年 wlpiaoyi. All rights reserved.
 //
 
+#define KEY_CACHE_HTTP_UEL(_URL_) [NSString stringWithFormat:@"HTTPHEAD_%@",_URL_];
+
 #import <Foundation/Foundation.h>
 #import "NetWork.h"
+
+extern  NSString *KEY_STATUS;
+extern  NSString *KEY_DATA;
+extern  NSString *KEY_CODE;
+extern  NSString *KEY_MESSAGE;
 
 @interface BaseService : NSObject
 -(BOOL) isSuccessResult:(NSObject**) result data:(NSObject*) data;

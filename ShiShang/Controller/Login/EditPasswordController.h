@@ -8,6 +8,6 @@
 
 #import "ShiShangController.h"
 
-@interface EditPasswordController : ShiShangController
+@interface EditPasswordController : ShiShangController<UITextFieldDelegate>
 
 @end

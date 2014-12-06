@@ -95,13 +95,22 @@ NSString *const KeyDatas = @"datas";
     } End:^(CGRect keyBoardFrame) {
         weakself.viewCarts.frame = weakself.rectViewCart;
     }];
+    [self.viewCarts setCallBackVendorTouchEnd:^(CGRect frame) {
+        weakself.rectViewCart = frame;
+    }];
+    
     [self.view removeGestureRecognizer:super.tapGestureRecognizer];
     self.orderData = [NSMutableArray new];
     // Do any additional setup after loading the view from its nib.
 }
 -(void) reloadData{
     self.arrayHead = [NSMutableArray arrayWithArray:@[@{KeyOrderHeadImage:@"http://e.hiphotos.baidu.com/image/pic/item/6a600c338744ebf8a656dd46daf9d72a6059a7a0.jpg"},@{KeyOrderHeadImage:@"http://e.hiphotos.baidu.com/image/pic/item/6a600c338744ebf8a656dd46daf9d72a6059a7a0.jpg"}]];
-    self.arrayData = [NSMutableArray arrayWithArray: [foodService queryAllFood]];
+    [foodService queryAllFoodByType:foodAutoQuery success:^(id data, NSDictionary *userInfo) {
+        self.arrayData = [NSMutableArray arrayWithArray:data];
+        
+    } faild:^(id data, NSDictionary *userInfo) {
+        
+    }];
     [_collectionViewOrder reloadData];
 }
 -(void) viewWillAppear:(BOOL)animated{
@@ -129,11 +138,32 @@ NSString *const KeyDatas = @"datas";
     self.rectViewCart = self.viewCarts.frame;
     self.viewCarts.arrayData = self.orderData;
     [self.viewCarts reloadData];
+    if (_rectViewCart.origin.x<0||_rectViewCart.origin.x+_rectViewCart.size.width>self.view.frame.size.width||_rectViewCart.origin.y<0||_rectViewCart.origin.y+_rectViewCart.size.height>self.view.frame.size.height) {
+        [UIView animateWithDuration:0.5f animations:^{
+            if (_rectViewCart.origin.x<0) {
+                _rectViewCart.origin.x = 0;
+            }
+            if (_rectViewCart.origin.y<0) {
+                _rectViewCart.origin.y = 0;
+            }
+            if (_rectViewCart.origin.x+_rectViewCart.size.width>self.view.frame.size.width) {
+                _rectViewCart.origin.x  = self.view.frame.size.width-_rectViewCart.size.width;
+            }
+            if (_rectViewCart.origin.y+_rectViewCart.size.height>self.view.frame.size.height) {
+                _rectViewCart.origin.y  = self.view.frame.size.height-_rectViewCart.size.height;
+            }
+            _viewCarts.frame = _rectViewCart;
+        }];
+    }
 }
 -(void) onclickHiddenCart{
     _viewCart.alpha = 1;
     [[self.view viewWithTag:9003] removeFromSuperview];
     [self.view removeGestureRecognizer:super.tapGestureRecognizer];
+    CGRect r = self.viewCart.frame;
+    r.origin.x = _rectViewCart.origin.x+_rectViewCart.size.width-r.size.width;
+    r.origin.y = _rectViewCart.origin.y;
+    self.viewCart.frame = r;
 }
 -(void) onclickResignFirstResponderViewCarts{
     [_viewCarts resignFirstResponder];

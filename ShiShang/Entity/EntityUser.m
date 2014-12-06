@@ -40,18 +40,18 @@ NSString *const KeyUserTotalConsumed = @"totalConsumed";
 }
 -(NSMutableDictionary*) toJson{
     NSMutableDictionary *json = [NSMutableDictionary new];
-    [json setObject:self.keyId forKey:KeyUserId];
-    [json setObject:self.name forKey:KeyUserName];
-    [json setObject:self.loginName forKey:KeyUserLoginName];
-    [json setObject:self.plainPassword forKey:KeyUserPlainPassword];
-    [json setObject:self.password forKey:KeyUserPassword];
-    [json setObject:self.salt forKey:KeyUserSalt];
-    [json setObject:self.roles forKey:KeyUserRoles];
-    [json setObject:self.registerDate forKey:KeyUserRegisterDate];
-    [json setObject:self.phoneNumber forKey:KeyUserPhoneNumber];
-    [json setObject:self.voucher forKey:KeyUserVoucher];
-    [json setObject:self.balance forKey:KeyUserBalance];
-    [json setObject:self.totalConsumed forKey:KeyUserTotalConsumed];
+    if(self.keyId)[json setObject:self.keyId forKey:KeyUserId];
+    if(self.name)[json setObject:self.name forKey:KeyUserName];
+    if(self.loginName)[json setObject:self.loginName forKey:KeyUserLoginName];
+    if(self.plainPassword)[json setObject:self.plainPassword forKey:KeyUserPlainPassword];
+    if(self.password)[json setObject:self.password forKey:KeyUserPassword];
+    if(self.salt)[json setObject:self.salt forKey:KeyUserSalt];
+    if(self.roles)[json setObject:self.roles forKey:KeyUserRoles];
+    if(self.registerDate)[json setObject:self.registerDate forKey:KeyUserRegisterDate];
+    if(self.phoneNumber)[json setObject:self.phoneNumber forKey:KeyUserPhoneNumber];
+    if(self.voucher)[json setObject:self.voucher forKey:KeyUserVoucher];
+    if(self.balance)[json setObject:self.balance forKey:KeyUserBalance];
+    if(self.totalConsumed)[json setObject:self.totalConsumed forKey:KeyUserTotalConsumed];
     return json;
 }
 

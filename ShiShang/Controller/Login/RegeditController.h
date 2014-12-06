@@ -8,6 +8,6 @@
 
 #import "ShiShangController.h"
 
-@interface RegeditController : ShiShangController
+@interface RegeditController : ShiShangController<UITextFieldDelegate>
 
 @end

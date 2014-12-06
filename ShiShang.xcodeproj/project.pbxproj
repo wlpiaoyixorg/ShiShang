@@ -102,9 +102,6 @@
 		1538C46E1A077BDE00DAC8AA /* UIScrollView+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 1538C3EF1A077BDE00DAC8AA /* UIScrollView+Extension.m */; };
 		1538C46F1A077BDE00DAC8AA /* UIScrollView+MJRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = 1538C3F11A077BDE00DAC8AA /* UIScrollView+MJRefresh.m */; };
 		1538C4701A077BDE00DAC8AA /* UIView+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 1538C3F31A077BDE00DAC8AA /* UIView+Extension.m */; };
-		1538C4711A077BDE00DAC8AA /* picker_line_check.png in Resources */ = {isa = PBXBuildFile; fileRef = 1538C3F71A077BDE00DAC8AA /* picker_line_check.png */; };
-		1538C4721A077BDE00DAC8AA /* picker_line_check@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1538C3F81A077BDE00DAC8AA /* picker_line_check@2x.png */; };
-		1538C4731A077BDE00DAC8AA /* SimplePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1538C3FA1A077BDE00DAC8AA /* SimplePickerView.m */; };
 		1538C4741A077BDE00DAC8AA /* btn_close_normal.png in Resources */ = {isa = PBXBuildFile; fileRef = 1538C3FC1A077BDE00DAC8AA /* btn_close_normal.png */; };
 		1538C4751A077BDE00DAC8AA /* btn_close_normal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1538C3FD1A077BDE00DAC8AA /* btn_close_normal@2x.png */; };
 		1538C4761A077BDE00DAC8AA /* btn_close_selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 1538C3FE1A077BDE00DAC8AA /* btn_close_selected.png */; };
@@ -118,6 +115,9 @@
 		1538C4941A07871D00DAC8AA /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1538C4931A07871D00DAC8AA /* libxml2.dylib */; };
 		1538C4961A07872800DAC8AA /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1538C4951A07872800DAC8AA /* libsqlite3.dylib */; };
 		153A45CD1A24761A00ABAF12 /* FoodService.m in Sources */ = {isa = PBXBuildFile; fileRef = 153A45CC1A24761A00ABAF12 /* FoodService.m */; };
+		154E56181A3152CD00448061 /* SimplePickerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 154E56131A3152CD00448061 /* SimplePickerCell.m */; };
+		154E56191A3152CD00448061 /* SimplePikerTable.m in Sources */ = {isa = PBXBuildFile; fileRef = 154E56151A3152CD00448061 /* SimplePikerTable.m */; };
+		154E561A1A3152CD00448061 /* SimplePikerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 154E56171A3152CD00448061 /* SimplePikerView.m */; };
 		15659CEC1A1F3C480019022E /* ManagerHeadCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 15659CEA1A1F3C480019022E /* ManagerHeadCell.m */; };
 		15659CED1A1F3C480019022E /* ManagerHeadCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 15659CEB1A1F3C480019022E /* ManagerHeadCell.xib */; };
 		15659CF11A1F3D550019022E /* ManagerDataCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 15659CEF1A1F3D550019022E /* ManagerDataCell.m */; };
@@ -153,6 +153,7 @@
 		15F4928E1A0DAA6A00AAE987 /* MainController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 15F4928C1A0DAA6A00AAE987 /* MainController.xib */; };
 		15FC80A51A08DCCE00186A1F /* LoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = 15FC80A31A08DCCE00186A1F /* LoginController.m */; };
 		15FC80A61A08DCCE00186A1F /* LoginController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 15FC80A41A08DCCE00186A1F /* LoginController.xib */; };
+		15FF2ED01A2DA6270046226E /* ConfigManage+Expand.m in Sources */ = {isa = PBXBuildFile; fileRef = 15FF2ECF1A2DA6270046226E /* ConfigManage+Expand.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -346,10 +347,6 @@
 		1538C3F11A077BDE00DAC8AA /* UIScrollView+MJRefresh.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+MJRefresh.m"; sourceTree = "<group>"; };
 		1538C3F21A077BDE00DAC8AA /* UIView+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Extension.h"; sourceTree = "<group>"; };
 		1538C3F31A077BDE00DAC8AA /* UIView+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Extension.m"; sourceTree = "<group>"; };
-		1538C3F71A077BDE00DAC8AA /* picker_line_check.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = picker_line_check.png; sourceTree = "<group>"; };
-		1538C3F81A077BDE00DAC8AA /* picker_line_check@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "picker_line_check@2x.png"; sourceTree = "<group>"; };
-		1538C3F91A077BDE00DAC8AA /* SimplePickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimplePickerView.h; sourceTree = "<group>"; };
-		1538C3FA1A077BDE00DAC8AA /* SimplePickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimplePickerView.m; sourceTree = "<group>"; };
 		1538C3FC1A077BDE00DAC8AA /* btn_close_normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn_close_normal.png; sourceTree = "<group>"; };
 		1538C3FD1A077BDE00DAC8AA /* btn_close_normal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_close_normal@2x.png"; sourceTree = "<group>"; };
 		1538C3FE1A077BDE00DAC8AA /* btn_close_selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn_close_selected.png; sourceTree = "<group>"; };
@@ -369,6 +366,12 @@
 		1538C4951A07872800DAC8AA /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		153A45CB1A24761A00ABAF12 /* FoodService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FoodService.h; sourceTree = "<group>"; };
 		153A45CC1A24761A00ABAF12 /* FoodService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FoodService.m; sourceTree = "<group>"; };
+		154E56121A3152CD00448061 /* SimplePickerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimplePickerCell.h; sourceTree = "<group>"; };
+		154E56131A3152CD00448061 /* SimplePickerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimplePickerCell.m; sourceTree = "<group>"; };
+		154E56141A3152CD00448061 /* SimplePikerTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimplePikerTable.h; sourceTree = "<group>"; };
+		154E56151A3152CD00448061 /* SimplePikerTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimplePikerTable.m; sourceTree = "<group>"; };
+		154E56161A3152CD00448061 /* SimplePikerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimplePikerView.h; sourceTree = "<group>"; };
+		154E56171A3152CD00448061 /* SimplePikerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimplePikerView.m; sourceTree = "<group>"; };
 		15659CE91A1F3C480019022E /* ManagerHeadCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ManagerHeadCell.h; sourceTree = "<group>"; };
 		15659CEA1A1F3C480019022E /* ManagerHeadCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ManagerHeadCell.m; sourceTree = "<group>"; };
 		15659CEB1A1F3C480019022E /* ManagerHeadCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ManagerHeadCell.xib; sourceTree = "<group>"; };
@@ -424,6 +427,8 @@
 		15FC80A21A08DCCE00186A1F /* LoginController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginController.h; sourceTree = "<group>"; };
 		15FC80A31A08DCCE00186A1F /* LoginController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginController.m; sourceTree = "<group>"; };
 		15FC80A41A08DCCE00186A1F /* LoginController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginController.xib; sourceTree = "<group>"; };
+		15FF2ECE1A2DA6270046226E /* ConfigManage+Expand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ConfigManage+Expand.h"; sourceTree = "<group>"; };
+		15FF2ECF1A2DA6270046226E /* ConfigManage+Expand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ConfigManage+Expand.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -888,13 +893,13 @@
 		1538C3D61A077BDE00DAC8AA /* UIKit */ = {
 			isa = PBXGroup;
 			children = (
+				154E56111A3152CD00448061 /* Piker */,
 				1538C3D71A077BDE00DAC8AA /* ActivityIndicator */,
 				1538C3DC1A077BDE00DAC8AA /* Calendar */,
 				1538C3DF1A077BDE00DAC8AA /* ControllerFrame */,
 				1538C3E01A077BDE00DAC8AA /* EMAsyncImageView */,
 				1538C3E31A077BDE00DAC8AA /* MJRefresh */,
 				1538C3F41A077BDE00DAC8AA /* PYGraph */,
-				1538C3F61A077BDE00DAC8AA /* SimplePickerView */,
 				1538C3FB1A077BDE00DAC8AA /* Vendor */,
 			);
 			path = UIKit;
@@ -974,17 +979,6 @@
 			path = ProgressBar;
 			sourceTree = "<group>";
 		};
-		1538C3F61A077BDE00DAC8AA /* SimplePickerView */ = {
-			isa = PBXGroup;
-			children = (
-				1538C3F71A077BDE00DAC8AA /* picker_line_check.png */,
-				1538C3F81A077BDE00DAC8AA /* picker_line_check@2x.png */,
-				1538C3F91A077BDE00DAC8AA /* SimplePickerView.h */,
-				1538C3FA1A077BDE00DAC8AA /* SimplePickerView.m */,
-			);
-			path = SimplePickerView;
-			sourceTree = "<group>";
-		};
 		1538C3FB1A077BDE00DAC8AA /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
@@ -1015,6 +1009,19 @@
 				1538C4861A077DC200DAC8AA /* ShiShangTopView.m */,
 			);
 			path = Controller;
+			sourceTree = "<group>";
+		};
+		154E56111A3152CD00448061 /* Piker */ = {
+			isa = PBXGroup;
+			children = (
+				154E56121A3152CD00448061 /* SimplePickerCell.h */,
+				154E56131A3152CD00448061 /* SimplePickerCell.m */,
+				154E56141A3152CD00448061 /* SimplePikerTable.h */,
+				154E56151A3152CD00448061 /* SimplePikerTable.m */,
+				154E56161A3152CD00448061 /* SimplePikerView.h */,
+				154E56171A3152CD00448061 /* SimplePikerView.m */,
+			);
+			path = Piker;
 			sourceTree = "<group>";
 		};
 		15E0A4701A1EFDBD00104E21 /* Manager */ = {
@@ -1050,6 +1057,8 @@
 				15105D141A0C8AC5009CBDAF /* UIS */,
 				15F1395E1A09BA7C0057BB68 /* Common+Expand.h */,
 				15F1395F1A09BA7C0057BB68 /* Common+Expand.m */,
+				15FF2ECE1A2DA6270046226E /* ConfigManage+Expand.h */,
+				15FF2ECF1A2DA6270046226E /* ConfigManage+Expand.m */,
 			);
 			path = CommonExpand;
 			sourceTree = "<group>";
@@ -1143,7 +1152,6 @@
 				1538C4751A077BDE00DAC8AA /* btn_close_normal@2x.png in Resources */,
 				15DDBB6E1A160D7A000D0019 /* BuyOrdersController.xib in Resources */,
 				15FC80A61A08DCCE00186A1F /* LoginController.xib in Resources */,
-				1538C4711A077BDE00DAC8AA /* picker_line_check.png in Resources */,
 				1538C4741A077BDE00DAC8AA /* btn_close_normal.png in Resources */,
 				151500B51A14EC010050BE3A /* colorpackge in Resources */,
 				1538C4771A077BDE00DAC8AA /* btn_close_selected@2x.png in Resources */,
@@ -1164,7 +1172,6 @@
 				1538C4691A077BDE00DAC8AA /* MJRefresh.bundle in Resources */,
 				151500B61A14EC010050BE3A /* gloable_button_reback_bg.png in Resources */,
 				15659CED1A1F3C480019022E /* ManagerHeadCell.xib in Resources */,
-				1538C4721A077BDE00DAC8AA /* picker_line_check@2x.png in Resources */,
 				15AC1C991A17A39A008BB85A /* buyorder_cartbutton.png in Resources */,
 				15F4928E1A0DAA6A00AAE987 /* MainController.xib in Resources */,
 				1538C4761A077BDE00DAC8AA /* btn_close_selected.png in Resources */,
@@ -1198,6 +1205,8 @@
 				1538C44E1A077BDE00DAC8AA /* RotateBaseController.m in Sources */,
 				1538C4611A077BDE00DAC8AA /* NetWorkHTTP.m in Sources */,
 				1538C4201A077BDE00DAC8AA /* FMDatabasePool.m in Sources */,
+				154E561A1A3152CD00448061 /* SimplePikerView.m in Sources */,
+				154E56191A3152CD00448061 /* SimplePikerTable.m in Sources */,
 				1538C4221A077BDE00DAC8AA /* FMResultSet.m in Sources */,
 				1538C4521A077BDE00DAC8AA /* UIView+AutoRect.m in Sources */,
 				1538C42B1A077BDE00DAC8AA /* clean.c in Sources */,
@@ -1269,7 +1278,6 @@
 				1538C43A1A077BDE00DAC8AA /* tmbstr.c in Sources */,
 				1538C4311A077BDE00DAC8AA /* lexer.c in Sources */,
 				1538C4841A077DA100DAC8AA /* ShiShangController.m in Sources */,
-				1538C4731A077BDE00DAC8AA /* SimplePickerView.m in Sources */,
 				157B64541A18B73F00650093 /* BuyOrderMenuCell.m in Sources */,
 				1538C47A1A077BDE00DAC8AA /* UIViewDraw.m in Sources */,
 				1538C4581A077BDE00DAC8AA /* UIImage+Convenience.m in Sources */,
@@ -1280,10 +1288,12 @@
 				15A38F1E1A0CF4BA00897B33 /* RegeditController.m in Sources */,
 				15AC1C941A17A2CA008BB85A /* BuyOrderCartView.m in Sources */,
 				1538C46F1A077BDE00DAC8AA /* UIScrollView+MJRefresh.m in Sources */,
+				154E56181A3152CD00448061 /* SimplePickerCell.m in Sources */,
 				1538C46C1A077BDE00DAC8AA /* MJRefreshFooterView.m in Sources */,
 				1538C4321A077BDE00DAC8AA /* localize.c in Sources */,
 				1538C4391A077BDE00DAC8AA /* tidylib.c in Sources */,
 				152E37391A1C9AD000F14824 /* NavigationScrollView.m in Sources */,
+				15FF2ED01A2DA6270046226E /* ConfigManage+Expand.m in Sources */,
 				15FC80A51A08DCCE00186A1F /* LoginController.m in Sources */,
 				15F1397C1A09FBD40057BB68 /* GraphicsLayer.m in Sources */,
 				1538C46E1A077BDE00DAC8AA /* UIScrollView+Extension.m in Sources */,

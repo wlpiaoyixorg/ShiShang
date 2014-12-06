@@ -7,8 +7,12 @@
 //
 
 #import "EditPasswordController.h"
+#import "UserService.h"
+#import "EntityUser.h"
 
 @interface EditPasswordController ()
+@property (nonatomic) CGRect rectKeyBorde;
+@property (strong, nonatomic) UserService *userService;
 @property (strong, nonatomic) IBOutlet UIView *viewValidate;
 @property (strong, nonatomic) IBOutlet UITextField *textFiledPhone;
 @property (strong, nonatomic) IBOutlet UITextField *textFiledValidate;
@@ -25,7 +29,7 @@
 - (void)viewDidLoad {
     [super setTitle:@"重置/修改密码"];
     [super viewDidLoad];
-    
+    _userService = [UserService new];
     
     [_viewValidate setCornerRadiusAndBorder:5 BorderWidth:0.5 BorderColor:[self.dicskin getSkinColor:@"bordercolordefault"]];
     [_textFiledValidate setCornerRadiusAndBorder:0 BorderWidth:0.5 BorderColor:[self.dicskin getSkinColor:@"bordercolordefault"]];
@@ -39,15 +43,25 @@
     _viewPassowrd.backgroundColor = [[SkinDictionary getSingleInstance] getSkinColor:@"textfiledview_bg_color"];
     _viewValidate.backgroundColor = [[SkinDictionary getSingleInstance] getSkinColor:@"textfiledview_bg_color"];
     
+    [_buttonConfirm addTarget:self action:@selector(onclickEdit)];
+    
+    _textFiledPassword.delegate =
+    _textFiledPassword2.delegate =
+    _textFiledPhone.delegate =
+    _textFiledValidate.delegate = self;
     
     __weak typeof(self) weakself = self;
     [super setSELShowKeyBoardStart:^{
         
     } End:^(CGRect keyBoardFrame) {
-        if (!([weakself.textFiledPassword isFirstResponder]||[weakself.textFiledPassword2 isFirstResponder])) {
-            return;
+        weakself.rectKeyBorde = keyBoardFrame;
+        
+        UITextField *tf = [weakself getResonderTextField];
+        if (!tf) {
+            return ;
         }
-        float offy = weakself.viewPassowrd.frame.origin.y+weakself.viewPassowrd.frame.size.height-keyBoardFrame.origin.y;
+        CGPoint p = [tf getAbsoluteOrigin:weakself.view];
+        float offy = p.y+tf.frame.size.height+keyBoardFrame.size.height-weakself.view.frame.size.height;
         if (offy>0) {
             CGRect r = weakself.view.frame;
             r.origin.y = -offy;
@@ -65,10 +79,56 @@
     // Do any additional setup after loading the view from its nib.
 }
 
+-(void) onclickEdit{
+    [self resignFirstResponder];
+    
+}
+
+#pragma ==> <UITextFieldDelegate>
+- (BOOL)textFieldShouldReturn:(UITextField *)textField{
+    if (_textFiledPhone.isFirstResponder) {
+        [_textFiledValidate becomeFirstResponder];
+    }else if (_textFiledValidate.isFirstResponder) {
+        [_textFiledPassword becomeFirstResponder];
+    }else if (_textFiledPassword.isFirstResponder) {
+        [_textFiledPassword2 becomeFirstResponder];
+    }else if (_textFiledPassword2.isFirstResponder) {
+        [self onclickEdit];
+    }
+    [UIView animateWithDuration:0.3f animations:^{
+        self->showEnd(self.rectKeyBorde);
+    }];
+    return YES;
+}
+#pragma <==
+
+
+-(UITextField*) getResonderTextField{
+    if (_textFiledPhone.isFirstResponder) {
+        return _textFiledPhone;
+    }
+    if (_textFiledValidate.isFirstResponder) {
+        return _textFiledValidate;
+    }
+    if (_textFiledPassword.isFirstResponder) {
+        return _textFiledPassword;
+    }
+    if (_textFiledPassword2.isFirstResponder) {
+        return _textFiledPassword2;
+    }
+    return nil;
+}
+
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+-(void) dealloc{
+    [self resignFirstResponder];
+}
+
 -(BOOL) resignFirstResponder{
     [_textFiledPhone resignFirstResponder];
     [_textFiledValidate resignFirstResponder];

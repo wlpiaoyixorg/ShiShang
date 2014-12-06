@@ -19,10 +19,6 @@
                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="bLe-hP-fh7">
                     <rect key="frame" x="0.0" y="44" width="320" height="524"/>
                     <color key="backgroundColor" red="0.1926869101" green="0.71542171560000001" blue="0.4970964618" alpha="1" colorSpace="calibratedRGB"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="320" id="6jl-9g-sAh"/>
-                        <constraint firstAttribute="height" constant="524" id="PIb-lW-ED9"/>
-                    </constraints>
                     <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="ihg-tt-4SP">
                         <size key="itemSize" width="50" height="50"/>
                         <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -33,10 +29,10 @@
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="bLe-hP-fh7" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="44" id="42S-SC-XLq"/>
-                <constraint firstAttribute="trailing" secondItem="bLe-hP-fh7" secondAttribute="trailing" id="IW3-eC-zsw"/>
-                <constraint firstItem="bLe-hP-fh7" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Off-kC-v6g"/>
-                <constraint firstAttribute="bottom" secondItem="bLe-hP-fh7" secondAttribute="bottom" id="QrG-Le-g2Y"/>
+                <constraint firstItem="bLe-hP-fh7" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="44" id="5Rp-tF-sAq"/>
+                <constraint firstAttribute="bottom" secondItem="bLe-hP-fh7" secondAttribute="bottom" id="CWb-J2-osn"/>
+                <constraint firstAttribute="trailing" secondItem="bLe-hP-fh7" secondAttribute="trailing" id="ZwB-Sa-8Hl"/>
+                <constraint firstItem="bLe-hP-fh7" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="bCw-wh-N7J"/>
             </constraints>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
         </view>
