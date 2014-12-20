@@ -11,6 +11,11 @@
 #import "Common+Expand.h"
 #import "SkinDictionary.h"
 #import "UIView+AutoRect.h"
+
+#define SSCON_TOP 44.0f
+#define SSCON_BUTTOM 44.0f
+#define SSCON_TIT 30.0f
+
 @interface ShiShangController : BaseController
 @property (nonatomic,strong,readonly) ShiShangTopView *topView;
 @property (nonatomic,assign,readonly) SkinDictionary *dicskin;

@@ -16,20 +16,41 @@
 }
 -(id) init{
     if (self=[super init]) {
-        views = [NSMutableArray new];
-        self.contentSize = CGSizeMake(0, 0);
-        self.pagingEnabled = YES;
-        self.scrollEnabled = YES;
-        self.showsHorizontalScrollIndicator = NO;
-        self.showsVerticalScrollIndicator = NO;
-        self.alwaysBounceHorizontal = NO;
-        self.alwaysBounceVertical = NO;
-        synaddviews = [NSObject new];
-        self.delegate = self;
-        self.frame = CGRectMake(0, 0, APP_W, APP_H);
+        [self initParams];
     }
     return self;
 }
+
+-(id) initWithCoder:(NSCoder *)aDecoder{
+    if (self=[super initWithCoder:aDecoder]) {
+        [self initParams];
+    }
+    return self;
+
+}
+
+-(id) initWithFrame:(CGRect)frame{
+    if (self=[super initWithFrame:frame]) {
+        [self initParams];
+    }
+    return self;
+
+}
+
+-(void) initParams{
+    views = [NSMutableArray new];
+    self.contentSize = CGSizeMake(0, 0);
+    self.pagingEnabled = YES;
+    self.scrollEnabled = YES;
+    self.showsHorizontalScrollIndicator = NO;
+    self.showsVerticalScrollIndicator = NO;
+    self.alwaysBounceHorizontal = NO;
+    self.alwaysBounceVertical = NO;
+    synaddviews = [NSObject new];
+    self.delegate = self;
+//    self.frame = CGRectMake(0, 0, APP_W, APP_H);
+}
+
 -(void) addSubview:(UIView *)view{
     @synchronized(synaddviews){
         if (view.tag==VIEWTAGSET) {

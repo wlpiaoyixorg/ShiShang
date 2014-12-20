@@ -11,6 +11,9 @@
 #import "NavigationScrollView.h"
 #import "BuyOrdersController.h"
 #import "ManagerController.h"
+#import "MessageViewController.h"
+#import "DataController.h"
+
 
 @interface MainController ()
 @property (strong, nonatomic) IBOutlet UIView *viewMain;
@@ -31,14 +34,16 @@
     _viewOpt = [NavigationScrollView new];
     _viewOpt.backgroundColor = [UIColor clearColor];
     _viewOpt.frame = CGRectMake(0, 0, APP_W, APP_H-44);
-    _viewOpt.backgroundColor = [UIColor blueColor];
     [self.viewMain addSubview:_viewOpt];
     // Do any additional setup after loading the view from its nib.
     
     BuyOrdersController *epc = [[BuyOrdersController alloc] initWithNibName:@"BuyOrdersController" bundle:nil];
     ManagerController *mc = [[ManagerController alloc] initWithNibName:@"ManagerController" bundle:nil];
+    MessageViewController *msg = [[MessageViewController alloc] init];
+    DataController *data = [[DataController alloc] init];
+    
     _viewOpt.parsentController = self;
-    _viewOpt.arrayControllers = [NSArray arrayWithObjects:epc,mc,nil];
+    _viewOpt.arrayControllers = [NSArray arrayWithObjects:epc,mc,msg,data,nil];
     
     __weak typeof(self) weakself =self;
     [_viewOpt setCallBackScrollEnd:^int(int showIndex, id userInfo) {

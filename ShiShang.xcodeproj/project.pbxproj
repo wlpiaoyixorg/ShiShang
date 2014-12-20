@@ -166,6 +166,21 @@
 		15FC80A51A08DCCE00186A1F /* LoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = 15FC80A31A08DCCE00186A1F /* LoginController.m */; };
 		15FC80A61A08DCCE00186A1F /* LoginController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 15FC80A41A08DCCE00186A1F /* LoginController.xib */; };
 		15FF2ED01A2DA6270046226E /* ConfigManage+Expand.m in Sources */ = {isa = PBXBuildFile; fileRef = 15FF2ECF1A2DA6270046226E /* ConfigManage+Expand.m */; };
+		8B5119801A4556AF001622A4 /* AccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B5119751A4556AF001622A4 /* AccountViewController.m */; };
+		8B5119811A4556AF001622A4 /* AccountViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B5119761A4556AF001622A4 /* AccountViewController.xib */; };
+		8B5119821A4556AF001622A4 /* MessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B5119781A4556AF001622A4 /* MessageViewController.m */; };
+		8B5119831A4556AF001622A4 /* MessageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B5119791A4556AF001622A4 /* MessageViewController.xib */; };
+		8B5119841A4556AF001622A4 /* OrdersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B51197B1A4556AF001622A4 /* OrdersViewController.m */; };
+		8B5119851A4556AF001622A4 /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B51197D1A4556AF001622A4 /* SettingViewController.m */; };
+		8B5119861A4556AF001622A4 /* StatisticViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B51197F1A4556AF001622A4 /* StatisticViewController.m */; };
+		8B5119891A4556C0001622A4 /* OrdersService.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B5119881A4556C0001622A4 /* OrdersService.m */; };
+		8B51198D1A4557B8001622A4 /* DataController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B51198B1A4557B8001622A4 /* DataController.m */; };
+		8B51198E1A4557B8001622A4 /* DataController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B51198C1A4557B8001622A4 /* DataController.xib */; };
+		8B5119991A45594E001622A4 /* BaseTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B5119911A45594E001622A4 /* BaseTableView.m */; };
+		8B51199A1A45594E001622A4 /* FooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B5119931A45594E001622A4 /* FooterView.m */; };
+		8B51199B1A45594E001622A4 /* HeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B5119951A45594E001622A4 /* HeaderView.m */; };
+		8B51199C1A45594E001622A4 /* OrdersViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B5119971A45594E001622A4 /* OrdersViewCell.m */; };
+		8B51199D1A45594E001622A4 /* OrdersViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B5119981A45594E001622A4 /* OrdersViewCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -461,6 +476,32 @@
 		15FC80A41A08DCCE00186A1F /* LoginController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginController.xib; sourceTree = "<group>"; };
 		15FF2ECE1A2DA6270046226E /* ConfigManage+Expand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ConfigManage+Expand.h"; sourceTree = "<group>"; };
 		15FF2ECF1A2DA6270046226E /* ConfigManage+Expand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ConfigManage+Expand.m"; sourceTree = "<group>"; };
+		8B5119741A4556AF001622A4 /* AccountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccountViewController.h; sourceTree = "<group>"; };
+		8B5119751A4556AF001622A4 /* AccountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccountViewController.m; sourceTree = "<group>"; };
+		8B5119761A4556AF001622A4 /* AccountViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AccountViewController.xib; sourceTree = "<group>"; };
+		8B5119771A4556AF001622A4 /* MessageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageViewController.h; sourceTree = "<group>"; };
+		8B5119781A4556AF001622A4 /* MessageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageViewController.m; sourceTree = "<group>"; };
+		8B5119791A4556AF001622A4 /* MessageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MessageViewController.xib; sourceTree = "<group>"; };
+		8B51197A1A4556AF001622A4 /* OrdersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrdersViewController.h; sourceTree = "<group>"; };
+		8B51197B1A4556AF001622A4 /* OrdersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrdersViewController.m; sourceTree = "<group>"; };
+		8B51197C1A4556AF001622A4 /* SettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingViewController.h; sourceTree = "<group>"; };
+		8B51197D1A4556AF001622A4 /* SettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingViewController.m; sourceTree = "<group>"; };
+		8B51197E1A4556AF001622A4 /* StatisticViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatisticViewController.h; sourceTree = "<group>"; };
+		8B51197F1A4556AF001622A4 /* StatisticViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatisticViewController.m; sourceTree = "<group>"; };
+		8B5119871A4556C0001622A4 /* OrdersService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrdersService.h; sourceTree = "<group>"; };
+		8B5119881A4556C0001622A4 /* OrdersService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrdersService.m; sourceTree = "<group>"; };
+		8B51198A1A4557B8001622A4 /* DataController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataController.h; sourceTree = "<group>"; };
+		8B51198B1A4557B8001622A4 /* DataController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataController.m; sourceTree = "<group>"; };
+		8B51198C1A4557B8001622A4 /* DataController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DataController.xib; sourceTree = "<group>"; };
+		8B5119901A45594E001622A4 /* BaseTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseTableView.h; sourceTree = "<group>"; };
+		8B5119911A45594E001622A4 /* BaseTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseTableView.m; sourceTree = "<group>"; };
+		8B5119921A45594E001622A4 /* FooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FooterView.h; sourceTree = "<group>"; };
+		8B5119931A45594E001622A4 /* FooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FooterView.m; sourceTree = "<group>"; };
+		8B5119941A45594E001622A4 /* HeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeaderView.h; sourceTree = "<group>"; };
+		8B5119951A45594E001622A4 /* HeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HeaderView.m; sourceTree = "<group>"; };
+		8B5119961A45594E001622A4 /* OrdersViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrdersViewCell.h; sourceTree = "<group>"; };
+		8B5119971A45594E001622A4 /* OrdersViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrdersViewCell.m; sourceTree = "<group>"; };
+		8B5119981A45594E001622A4 /* OrdersViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OrdersViewCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1047,6 +1088,7 @@
 		1538C4811A077D7900DAC8AA /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				8B5119731A4556AF001622A4 /* Data */,
 				15E0A4701A1EFDBD00104E21 /* Manager */,
 				15105D1B1A0C9154009CBDAF /* Main */,
 				15105D0E1A0C8A66009CBDAF /* BuyOrder */,
@@ -1132,6 +1174,8 @@
 		15F48B251A0B30AB008A39A7 /* Service */ = {
 			isa = PBXGroup;
 			children = (
+				8B5119871A4556C0001622A4 /* OrdersService.h */,
+				8B5119881A4556C0001622A4 /* OrdersService.m */,
 				15F48B291A0B3174008A39A7 /* UserService.h */,
 				15F48B2A1A0B3174008A39A7 /* UserService.m */,
 				15F48B2C1A0B33BD008A39A7 /* BaseService.h */,
@@ -1158,6 +1202,45 @@
 				15A38F221A0D0ACC00897B33 /* EditPasswordController.xib */,
 			);
 			path = Login;
+			sourceTree = "<group>";
+		};
+		8B5119731A4556AF001622A4 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				8B51198F1A45594E001622A4 /* View */,
+				8B5119741A4556AF001622A4 /* AccountViewController.h */,
+				8B5119751A4556AF001622A4 /* AccountViewController.m */,
+				8B5119761A4556AF001622A4 /* AccountViewController.xib */,
+				8B5119771A4556AF001622A4 /* MessageViewController.h */,
+				8B5119781A4556AF001622A4 /* MessageViewController.m */,
+				8B5119791A4556AF001622A4 /* MessageViewController.xib */,
+				8B51197A1A4556AF001622A4 /* OrdersViewController.h */,
+				8B51197B1A4556AF001622A4 /* OrdersViewController.m */,
+				8B51197C1A4556AF001622A4 /* SettingViewController.h */,
+				8B51197D1A4556AF001622A4 /* SettingViewController.m */,
+				8B51197E1A4556AF001622A4 /* StatisticViewController.h */,
+				8B51197F1A4556AF001622A4 /* StatisticViewController.m */,
+				8B51198A1A4557B8001622A4 /* DataController.h */,
+				8B51198B1A4557B8001622A4 /* DataController.m */,
+				8B51198C1A4557B8001622A4 /* DataController.xib */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		8B51198F1A45594E001622A4 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				8B5119901A45594E001622A4 /* BaseTableView.h */,
+				8B5119911A45594E001622A4 /* BaseTableView.m */,
+				8B5119921A45594E001622A4 /* FooterView.h */,
+				8B5119931A45594E001622A4 /* FooterView.m */,
+				8B5119941A45594E001622A4 /* HeaderView.h */,
+				8B5119951A45594E001622A4 /* HeaderView.m */,
+				8B5119961A45594E001622A4 /* OrdersViewCell.h */,
+				8B5119971A45594E001622A4 /* OrdersViewCell.m */,
+				8B5119981A45594E001622A4 /* OrdersViewCell.xib */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1231,8 +1314,10 @@
 				15AC1C8C1A173A4F008BB85A /* OrderHeadCollectionViewCell.xib in Resources */,
 				15A38F241A0D0ACC00897B33 /* EditPasswordController.xib in Resources */,
 				1538C2E41A077B2A00DAC8AA /* LaunchScreen.xib in Resources */,
+				8B51198E1A4557B8001622A4 /* DataController.xib in Resources */,
 				15A38F1F1A0CF4BA00897B33 /* RegeditController.xib in Resources */,
 				157B64581A18BEC300650093 /* buyorder_menu_btn_minus.png in Resources */,
+				8B5119831A4556AF001622A4 /* MessageViewController.xib in Resources */,
 				15AC1C9A1A17A39A008BB85A /* buyorder_cartview.png in Resources */,
 				151500B01A149F430050BE3A /* OrderCollectionViewCell.xib in Resources */,
 				157B64551A18B73F00650093 /* BuyOrderMenuCell.xib in Resources */,
@@ -1246,9 +1331,11 @@
 				1538C4691A077BDE00DAC8AA /* MJRefresh.bundle in Resources */,
 				151500B61A14EC010050BE3A /* gloable_button_reback_bg.png in Resources */,
 				15659CED1A1F3C480019022E /* ManagerHeadCell.xib in Resources */,
+				8B51199D1A45594E001622A4 /* OrdersViewCell.xib in Resources */,
 				15AC1C991A17A39A008BB85A /* buyorder_cartbutton.png in Resources */,
 				15F4928E1A0DAA6A00AAE987 /* MainController.xib in Resources */,
 				1538C4761A077BDE00DAC8AA /* btn_close_selected.png in Resources */,
+				8B5119811A4556AF001622A4 /* AccountViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1259,6 +1346,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8B51199A1A45594E001622A4 /* FooterView.m in Sources */,
 				1538C4781A077BDE00DAC8AA /* PopUpBasisView.m in Sources */,
 				155E45011A3949B3003D9B65 /* ManagerAddType.m in Sources */,
 				15659CF11A1F3D550019022E /* ManagerDataCell.m in Sources */,
@@ -1298,6 +1386,7 @@
 				1538C45B1A077BDE00DAC8AA /* UIWebView+convenience.m in Sources */,
 				1538C4291A077BDE00DAC8AA /* buffio.c in Sources */,
 				1538C4231A077BDE00DAC8AA /* access.c in Sources */,
+				8B51198D1A4557B8001622A4 /* DataController.m in Sources */,
 				1538C4601A077BDE00DAC8AA /* NetWorkDownLoad.m in Sources */,
 				1538C4621A077BDE00DAC8AA /* ReachabilityListener.m in Sources */,
 				1538C42D1A077BDE00DAC8AA /* entities.c in Sources */,
@@ -1309,11 +1398,14 @@
 				15F48B2E1A0B33BD008A39A7 /* BaseService.m in Sources */,
 				1538C42F1A077BDE00DAC8AA /* iconvtc.c in Sources */,
 				15F48B2B1A0B3174008A39A7 /* UserService.m in Sources */,
+				8B5119861A4556AF001622A4 /* StatisticViewController.m in Sources */,
 				1538C4651A077BDE00DAC8AA /* ActivityIndicatorView.m in Sources */,
 				1538C4441A077BDE00DAC8AA /* Reachability.m in Sources */,
 				15F139661A09C32A0057BB68 /* UITextField+Expand.m in Sources */,
 				1538C45C1A077BDE00DAC8AA /* FDEntityManager.m in Sources */,
+				8B5119821A4556AF001622A4 /* MessageViewController.m in Sources */,
 				1538C4511A077BDE00DAC8AA /* UITextField+Param.m in Sources */,
+				8B51199B1A45594E001622A4 /* HeaderView.m in Sources */,
 				1538C4211A077BDE00DAC8AA /* FMDatabaseQueue.m in Sources */,
 				15E0A4741A1EFDD000104E21 /* ManagerController.m in Sources */,
 				153BCFC31A4270BC00A6069D /* NSDataResult.m in Sources */,
@@ -1326,6 +1418,7 @@
 				1538C4401A077BDE00DAC8AA /* NSString+SBJSON.m in Sources */,
 				1538C46B1A077BDE00DAC8AA /* MJRefreshConst.m in Sources */,
 				15AC1C8B1A173A4F008BB85A /* OrderHeadCollectionViewCell.m in Sources */,
+				8B5119801A4556AF001622A4 /* AccountViewController.m in Sources */,
 				1538C4491A077BDE00DAC8AA /* unzip.c in Sources */,
 				1538C4341A077BDE00DAC8AA /* parser.c in Sources */,
 				15A38F231A0D0ACC00897B33 /* EditPasswordController.m in Sources */,
@@ -1333,6 +1426,8 @@
 				15B77A5D1A4320F30094535C /* ManageAddData.m in Sources */,
 				1538C4271A077BDE00DAC8AA /* attrget.c in Sources */,
 				1538C46A1A077BDE00DAC8AA /* MJRefreshBaseView.m in Sources */,
+				8B5119991A45594E001622A4 /* BaseTableView.m in Sources */,
+				8B5119841A4556AF001622A4 /* OrdersViewController.m in Sources */,
 				15F139791A09FB870057BB68 /* GraphicsThumb.m in Sources */,
 				1538C40F1A077BDE00DAC8AA /* ConfigManage.m in Sources */,
 				1538C4371A077BDE00DAC8AA /* tagask.c in Sources */,
@@ -1342,6 +1437,7 @@
 				1538C45F1A077BDE00DAC8AA /* GraphicsContext.m in Sources */,
 				1538C42A1A077BDE00DAC8AA /* charsets.c in Sources */,
 				1538C43C1A077BDE00DAC8AA /* win32tc.c in Sources */,
+				8B51199C1A45594E001622A4 /* OrdersViewCell.m in Sources */,
 				1538C40B1A077BDE00DAC8AA /* Common.m in Sources */,
 				1538C45D1A077BDE00DAC8AA /* FDObject.m in Sources */,
 				152DBBCB1A3C87BA006D70B6 /* SimpleObserver.m in Sources */,
@@ -1361,6 +1457,7 @@
 				1538C4311A077BDE00DAC8AA /* lexer.c in Sources */,
 				1538C4841A077DA100DAC8AA /* ShiShangController.m in Sources */,
 				157B64541A18B73F00650093 /* BuyOrderMenuCell.m in Sources */,
+				8B5119891A4556C0001622A4 /* OrdersService.m in Sources */,
 				1538C47A1A077BDE00DAC8AA /* UIViewDraw.m in Sources */,
 				1538C4581A077BDE00DAC8AA /* UIImage+Convenience.m in Sources */,
 				1538C4531A077BDE00DAC8AA /* GDataXMLElement+expanded.m in Sources */,
@@ -1375,6 +1472,7 @@
 				1538C4321A077BDE00DAC8AA /* localize.c in Sources */,
 				1538C4391A077BDE00DAC8AA /* tidylib.c in Sources */,
 				152E37391A1C9AD000F14824 /* NavigationScrollView.m in Sources */,
+				8B5119851A4556AF001622A4 /* SettingViewController.m in Sources */,
 				15FF2ED01A2DA6270046226E /* ConfigManage+Expand.m in Sources */,
 				15FC80A51A08DCCE00186A1F /* LoginController.m in Sources */,
 				15F1397C1A09FBD40057BB68 /* GraphicsLayer.m in Sources */,

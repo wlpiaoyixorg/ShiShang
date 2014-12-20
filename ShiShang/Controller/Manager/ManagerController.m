@@ -76,7 +76,7 @@
 -(void) viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     CGRect r = self.view.frame;
-    r.size.height-=44;
+    r.size.height = APP_H-SSCON_BUTTOM;
     self.view.frame = r;
     [self reloadData];
 }
