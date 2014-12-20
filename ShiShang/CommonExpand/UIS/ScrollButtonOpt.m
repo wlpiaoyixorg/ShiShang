@@ -12,6 +12,7 @@
 @implementation ScrollButtonOpt{
 @private
     UIImageView *imageViewFloa;
+    CallBackScrollEnd callBackScrollEnd;
 }
 -(id) init{
     if (self = [super init]) {
@@ -119,8 +120,15 @@
         CGRect r = imageViewFloa.frame;
         r.origin = p;
         imageViewFloa.frame = r;
+        if (callBackScrollEnd) {
+            callBackScrollEnd(super.showIndex,nil);
+        }
     }];
 }
+-(void) setCallBackScrollEnd:(CallBackScrollEnd)callBack{
+    callBackScrollEnd = callBack;
+}
+
 -(void) setImageBg:(UIImage *)imageBg{
     _imageBg = imageBg;
     imageViewFloa.image = imageBg;

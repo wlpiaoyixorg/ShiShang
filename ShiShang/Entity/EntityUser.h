@@ -11,6 +11,7 @@
 
 
 extern NSString *const KeyUserId;
+extern NSString *const KeyUserShopId;
 extern NSString *const KeyUserName;
 extern NSString *const KeyUserLoginName;
 extern NSString *const KeyUserPlainPassword;
@@ -26,6 +27,7 @@ extern NSString *const KeyUserTotalConsumed;
 
 @interface EntityUser : NSObject<ProtocolEntity>
 @property NSNumber *keyId;
+@property NSNumber *shopId;
 @property NSString *name;
 @property NSString *loginName;
 @property NSString *plainPassword;

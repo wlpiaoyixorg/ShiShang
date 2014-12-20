@@ -7,8 +7,7 @@
 //
 
 #import "BaseService.h"
-#import "JSON.h"
-
+#import "Common.h"
 
  NSString *KEY_STATUS = @"status";
  NSString *KEY_DATA = @"data";
@@ -16,23 +15,42 @@
  NSString *KEY_CODE = @"errorNo";
  NSString *KEY_MESSAGE = @"errorMessage";
 
-
 @implementation BaseService
--(BOOL) isSuccessResult:(NSObject**) result data:(NSObject*) data{
-    id json = [((NSString*)data) JSONValue];
-    if (json) {
-        NSNumber *erroNo = [json valueForKey:KEY_CODE];
-        *result = [NSMutableDictionary new];
-        if (erroNo) {
-            [*result setValue:erroNo forKey:KEY_STATUS];
-            [*result setValue:[json valueForKey:@"errorMessage"] forKey:KEY_MESSAGE];
-            return false;
-        }else{
-            [*result setValuesForKeysWithDictionary:json];
-            return true;
-        }
+
+-(void) showMsgIfNeed:(NSDataResult*) resulte{
+    if (resulte&&resulte.code!=200) {
+        [Common showMessage:(NSString*)resulte.data Title:nil];
+    }else if (!resulte){
+        [Common showMessage:NSLocalizedString(@"net_faild", nil) Title:nil];
     }
-    return false;
+}
+
+-(BOOL) isSuccessResult:(NSDataResult**) result data:(NSObject*) data{
+    @try {
+        id json = [((NSString*)data) JSONValue];
+        if (json) {
+            NSNumber *erroNo = [json valueForKey:KEY_CODE];
+            *result = [[NSDataResult alloc] init];
+            int code;
+            NSObject *data;
+            if (erroNo) {
+                code = erroNo.intValue;
+                data = [json valueForKey:KEY_MESSAGE];
+            }else{
+                code = 200;
+                data = json;
+            }
+            [*result setCode:code];
+            [*result setData:data];
+            if (code==200) {
+                return true;
+            }
+        }
+        return false;
+    }
+    @finally {
+        [self showMsgIfNeed:*result];
+    }
 }
 
 @end

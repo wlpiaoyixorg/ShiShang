@@ -10,21 +10,19 @@
 
 #define KEYUSERNAME @"adfasdfdf"
 #define KEYPASSWORD @"adsfasdfafd"
-static NSString *userName;
-static NSString *password;
 static EntityUser *loginUser;
 @implementation ConfigManage(Expand)
 +(NSString*) getUserName{
-    return userName;
+    return [ConfigManage getConfigValue:KEYUSERNAME];
 }
 +(NSString*) getPassword{
-    return password;
+    return [ConfigManage getConfigValue:KEYPASSWORD];
 }
 +(void) setUserName:(NSString*) _userName_{
-    userName = _userName_;
+    [ConfigManage setConfigValue:_userName_ Key:KEYUSERNAME];
 }
 +(void) setPassword:(NSString*) _passowrd_{
-    password = _passowrd_;
+    [ConfigManage setConfigValue:_passowrd_ Key:KEYPASSWORD];
 }
 +(void) setLoginUser:(EntityUser*) user{
     loginUser = user;

@@ -15,16 +15,29 @@
 @property (strong, nonatomic) IBOutlet UITableView *tableViewMenu;
 @property (strong, nonatomic) IBOutlet UILabel *lableTotal;
 @property (strong, nonatomic) IBOutlet UITextField *textFieldDesk;
+@property (strong, nonatomic) IBOutlet UIButton *buttonClose;
 
 
 @end
 
 @implementation BuyOrderCartView
+
+
+-(id) initWithCoder:(NSCoder *)aDecoder{
+    if (self=[super initWithCoder:aDecoder]) {
+    }
+    return self;
+}
+-(void) addSubview:(UIView *)view{
+    [super addSubview:view];
+}
+
 - (void)awakeFromNib {
     _tableViewMenu.delegate = self;
     _tableViewMenu.dataSource = self;
     UINib *nib = [UINib nibWithNibName:@"BuyOrderMenuCell" bundle:nil];
     [_tableViewMenu registerNib:nib forCellReuseIdentifier:@"BuyOrderMenuCell"];
+    [_buttonClose addTarget:self action:@selector(close)];
 }
 -(void) setArrayData:(NSMutableArray *) arrayData{
     _arrayData = arrayData;

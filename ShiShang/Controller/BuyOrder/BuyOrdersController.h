@@ -16,4 +16,5 @@ extern NSString *const KeyDatas;
 @interface BuyOrdersController : ShiShangController<UICollectionViewDelegate,UICollectionViewDataSource>
 @property (nonatomic,strong) NSMutableArray *arrayData;
 @property (nonatomic,strong) NSMutableArray *arrayHead;
+-(void) reloadData;
 @end

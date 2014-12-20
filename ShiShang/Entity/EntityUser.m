@@ -9,6 +9,7 @@
 #import "EntityUser.h"
 
 NSString *const KeyUserId = @"id";
+NSString *const KeyUserShopId = @"shopID";
 NSString *const KeyUserName = @"name";
 NSString *const KeyUserLoginName  = @"loginName";
 NSString *const KeyUserPlainPassword = @"plainPassword";
@@ -25,6 +26,7 @@ NSString *const KeyUserTotalConsumed = @"totalConsumed";
 +(instancetype) entityWithJson:(NSDictionary*) json{
     EntityUser *user = [EntityUser new];
     user.keyId = [json objectForKey:KeyUserId];
+    user.shopId = [json objectForKey:KeyUserShopId];
     user.name = [json objectForKey:KeyUserName];
     user.loginName = [json objectForKey:KeyUserLoginName];
     user.plainPassword = [json objectForKey:KeyUserPlainPassword];
@@ -41,6 +43,7 @@ NSString *const KeyUserTotalConsumed = @"totalConsumed";
 -(NSMutableDictionary*) toJson{
     NSMutableDictionary *json = [NSMutableDictionary new];
     if(self.keyId)[json setObject:self.keyId forKey:KeyUserId];
+    if(self.shopId)[json setObject:self.keyId forKey:KeyUserShopId];
     if(self.name)[json setObject:self.name forKey:KeyUserName];
     if(self.loginName)[json setObject:self.loginName forKey:KeyUserLoginName];
     if(self.plainPassword)[json setObject:self.plainPassword forKey:KeyUserPlainPassword];

@@ -10,6 +10,8 @@
 
 #import <Foundation/Foundation.h>
 #import "NetWork.h"
+#import "NSDataResult.h"
+
 
 extern  NSString *KEY_STATUS;
 extern  NSString *KEY_DATA;
@@ -17,5 +19,5 @@ extern  NSString *KEY_CODE;
 extern  NSString *KEY_MESSAGE;
 
 @interface BaseService : NSObject
--(BOOL) isSuccessResult:(NSObject**) result data:(NSObject*) data;
+-(BOOL) isSuccessResult:(NSDataResult**) result data:(NSObject*) data;
 @end

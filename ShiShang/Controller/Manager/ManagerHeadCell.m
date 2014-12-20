@@ -8,10 +8,21 @@
 
 #import "ManagerHeadCell.h"
 
+@interface ManagerHeadCell()
+
+@property (strong, nonatomic) IBOutlet UILabel *lableFoodType;
+
+@end
+
 @implementation ManagerHeadCell
 
 - (void)awakeFromNib {
     // Initialization code
+}
+
+-(void) setFoodType:(NSString *)foodType{
+    _foodType = foodType;
+    _lableFoodType.text = _foodType;
 }
 
 @end

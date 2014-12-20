@@ -39,6 +39,16 @@
     ManagerController *mc = [[ManagerController alloc] initWithNibName:@"ManagerController" bundle:nil];
     _viewOpt.parsentController = self;
     _viewOpt.arrayControllers = [NSArray arrayWithObjects:epc,mc,nil];
+    
+    __weak typeof(self) weakself =self;
+    [_viewOpt setCallBackScrollEnd:^int(int showIndex, id userInfo) {
+        weakself.viewButtom.showIndex = showIndex;
+        return 1;
+    }];
+    [_viewButtom setCallBackScrollEnd:^int(int showIndex, id userInfo) {
+        [weakself.viewOpt setShowIndex:showIndex];
+        return 1;
+    }];
 }
 -(void) viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];

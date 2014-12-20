@@ -12,6 +12,7 @@ extern NSString *const KeyManagerId;
 extern NSString *const KeyManagerCategory;
 extern NSString *const KeyManagerName;
 
-@interface ManagerController : ShiShangController
+@interface ManagerController : ShiShangController<UICollectionViewDelegate,UICollectionViewDataSource>
 @property (nonatomic,strong) NSMutableArray *arrayData;
+-(void) reloadData;
 @end

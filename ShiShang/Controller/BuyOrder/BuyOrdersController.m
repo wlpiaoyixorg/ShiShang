@@ -15,6 +15,7 @@
 #import "BuyOrderCartView.h"
 #import "EntityFood.h"
 #import "FoodService.h"
+#import "ObserverListner.h"
 
 NSString *const KeyBuyOrderDeskNum = @"orderDeskNum";
 NSString *const KeyOrderHeadImage = @"headImage";
@@ -22,25 +23,24 @@ NSString *const KeyOrderHeadImage = @"headImage";
 NSString *const KeyDatas = @"datas";
 
 @interface BuyOrdersController (){
-    CGRect rectViewCarts;
     FoodService *foodService;
 }
 @property (strong, nonatomic) IBOutlet VendorMoveView *viewCart;
+@property (strong, nonatomic) BuyOrderCartView *viewCartOpt;
+@property (nonatomic) CGRect *rectCartOpt;
 @property (strong, nonatomic) IBOutlet UIView *viewHead;
 @property (strong, nonatomic) IBOutlet UICollectionView *collectionViewOrder;
 
 @property (strong, nonatomic) ScrollViewOpt *viewHeadImage;
-
-@property (strong, nonatomic) BuyOrderCartView *viewCarts;
-@property (strong, nonatomic) UITapGestureRecognizer *tapGestureviewCarts;
-@property (strong, nonatomic) UITapGestureRecognizer *tapGestureviewKeyBoradCarts;
-@property  CGRect rectViewCart;
 
 @property NSMutableArray *orderData;
 @end
 
 @implementation BuyOrdersController
 - (void)viewDidLoad {
+    
+    [[ObserverListner getNewInstance] mergeWithTarget:self action:@selector(reloadData) arguments:nil key:NSStringFromClass([self class])];
+    
     [super viewDidLoad];
     [self setTitle:@"下单"];
     [self showReturnButton:NO];
@@ -68,35 +68,35 @@ NSString *const KeyDatas = @"datas";
     [_viewCart addTarget:self action:@selector(onclickShowCart)];
     [_viewCart removeFromSuperview];
     [self.view addSubview:_viewCart];
-    _viewCarts = [[[NSBundle mainBundle] loadNibNamed:@"BuyOrderCartView" owner:self options:nil] lastObject];
     
-    _tapGestureviewCarts = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(onclickHiddenCart)];
     
-    _tapGestureviewKeyBoradCarts = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(onclickResignFirstResponderViewCarts)];
     
     __weak typeof (self) weakself = self;
     [self setSELShowKeyBoardStart:^{
-        [[weakself.view viewWithTag:9003] removeGestureRecognizer:weakself.tapGestureviewCarts];
-        [[weakself.view viewWithTag:9003] addGestureRecognizer:weakself.tapGestureviewKeyBoradCarts];
     } End:^(CGRect keyBoardFrame) {
-        float offy = weakself.viewCarts.frame.origin.y+weakself.viewCarts.frame.size.height-keyBoardFrame.origin.y;
-        if (offy>0) {
-           CGRect r = weakself.viewCarts.frame;
-            r.origin.y-=offy;
-            r.origin.x = (weakself.view.frame.size.width - weakself.rectViewCart.size.width)/2;
-            weakself.viewCarts.frame = r;
+        CGRect r = [Common getAbsoluteRect:weakself.viewCartOpt.viewShow relativelyView:weakself.navigationController.view];
+        float offy = keyBoardFrame.origin.y-(r.origin.y+r.size.height);
+        if (offy<0) {
+            r = weakself.view.frame;
+            r.origin.y = offy;
+            [UIView animateWithDuration:0.25f animations:^{
+                weakself.view.frame = r;
+            }];
         }
         
     }];
     [self setSELHiddenKeyBoardBefore:^{
-        [[weakself.view viewWithTag:9003] addGestureRecognizer:weakself.tapGestureviewCarts];
-        [[weakself.view viewWithTag:9003] removeGestureRecognizer:weakself.tapGestureviewKeyBoradCarts];
-        
+        if (weakself.view.frame.origin.y<0) {
+            [UIView animateWithDuration:0.25f animations:^{
+                CGRect r = weakself.view.frame;
+                r.origin.y = 0;
+                weakself.view.frame = r;
+            }];
+        }
     } End:^(CGRect keyBoardFrame) {
-        weakself.viewCarts.frame = weakself.rectViewCart;
     }];
-    [self.viewCarts setCallBackVendorTouchEnd:^(CGRect frame) {
-        weakself.rectViewCart = frame;
+    [self.viewCartOpt.viewShow setCallBackVendorTouchEnd:^(CGRect frame) {
+//        weakself.rectViewCartOpt = frame;
     }];
     
     [self.view removeGestureRecognizer:super.tapGestureRecognizer];
@@ -105,73 +105,67 @@ NSString *const KeyDatas = @"datas";
 }
 -(void) reloadData{
     self.arrayHead = [NSMutableArray arrayWithArray:@[@{KeyOrderHeadImage:@"http://e.hiphotos.baidu.com/image/pic/item/6a600c338744ebf8a656dd46daf9d72a6059a7a0.jpg"},@{KeyOrderHeadImage:@"http://e.hiphotos.baidu.com/image/pic/item/6a600c338744ebf8a656dd46daf9d72a6059a7a0.jpg"}]];
-    [foodService queryAllFoodByType:foodAutoQuery success:^(id data, NSDictionary *userInfo) {
-        self.arrayData = [NSMutableArray arrayWithArray:data];
-        
-    } faild:^(id data, NSDictionary *userInfo) {
-        
-    }];
-    [_collectionViewOrder reloadData];
+    self.arrayData = [NSMutableArray arrayWithArray:[foodService queryAllFoodFromDataBase]];
 }
 -(void) viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     CGRect r = self.view.frame;
     r.size.height -=44;
     self.view.frame = r;
-    [self reloadData];
 }
 -(void) onclickShowCart{
-    CGRect r = _viewCart.frame;
-    r.size = _viewCarts.frame.size;
-    r.origin.x = r.origin.x-(r.size.width-_viewCart.frame.size.width);
-    _viewCarts.frame = r;
-    UIView *viewfloa = [UIView new];
-    viewfloa.frame = self.view.frame;
-    viewfloa.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.3];
-    [viewfloa addSubview:_viewCarts];
-    _viewCart.alpha = 0;
-    viewfloa.tag = 9003;
-    [self.view addSubview:viewfloa];
-    [viewfloa addGestureRecognizer:_tapGestureviewCarts];
-    [viewfloa removeGestureRecognizer:_tapGestureviewKeyBoradCarts];
-    [self.view addGestureRecognizer:super.tapGestureRecognizer];
-    self.rectViewCart = self.viewCarts.frame;
-    self.viewCarts.arrayData = self.orderData;
-    [self.viewCarts reloadData];
-    if (_rectViewCart.origin.x<0||_rectViewCart.origin.x+_rectViewCart.size.width>self.view.frame.size.width||_rectViewCart.origin.y<0||_rectViewCart.origin.y+_rectViewCart.size.height>self.view.frame.size.height) {
-        [UIView animateWithDuration:0.5f animations:^{
-            if (_rectViewCart.origin.x<0) {
-                _rectViewCart.origin.x = 0;
-            }
-            if (_rectViewCart.origin.y<0) {
-                _rectViewCart.origin.y = 0;
-            }
-            if (_rectViewCart.origin.x+_rectViewCart.size.width>self.view.frame.size.width) {
-                _rectViewCart.origin.x  = self.view.frame.size.width-_rectViewCart.size.width;
-            }
-            if (_rectViewCart.origin.y+_rectViewCart.size.height>self.view.frame.size.height) {
-                _rectViewCart.origin.y  = self.view.frame.size.height-_rectViewCart.size.height;
-            }
-            _viewCarts.frame = _rectViewCart;
-        }];
-    }
-}
--(void) onclickHiddenCart{
-    _viewCart.alpha = 1;
-    [[self.view viewWithTag:9003] removeFromSuperview];
-    [self.view removeGestureRecognizer:super.tapGestureRecognizer];
+    _viewCartOpt = [[[NSBundle mainBundle] loadNibNamed:@"BuyOrderCartView" owner:self options:nil] lastObject];
+    [_viewCartOpt setBackgroundColor:[UIColor clearColor]];
+    [_viewCartOpt setViewSuper:self.view];
+    [_viewCartOpt setAnimation:PopUpVendorViewAnimationNone];
+    [_viewCartOpt setFlagTouchHidden:NO];
+    [_viewCartOpt setFlagBackToCenter:NO];
     CGRect r = self.viewCart.frame;
-    r.origin.x = _rectViewCart.origin.x+_rectViewCart.size.width-r.size.width;
-    r.origin.y = _rectViewCart.origin.y;
-    self.viewCart.frame = r;
-}
--(void) onclickResignFirstResponderViewCarts{
-    [_viewCarts resignFirstResponder];
+    r.size = self.viewCartOpt.viewShow.frame.size;
+    r.origin.x -= (r.size.width-self.viewCart.frame.size.width);
+    _viewCartOpt.pointShow = r.origin;
+    
+    
+    __weak typeof(self) weakself = self;
+    [_viewCartOpt setAfterShow:^(PopUpVendorView *vmv) {
+        weakself.viewCart.alpha = 0;
+        CGRect r = weakself.viewCartOpt.viewShow.frame;
+        if (r.origin.x<0||r.origin.y<0||r.origin.x>weakself.view.frame.size.width-r.size.width||r.origin.y>weakself.view.frame.size.height-r.size.height) {
+            [UIView animateWithDuration:0.25f animations:^{
+                CGRect r = weakself.viewCartOpt.viewShow.frame;
+                r.origin.x = r.origin.x<0?0:r.origin.x;
+                r.origin.y = r.origin.y<0?0:r.origin.y;
+                r.origin.y = r.origin.y>(weakself.view.frame.size.height-r.size.height)?(weakself.view.frame.size.height-r.size.height):r.origin.y;
+                r.origin.x = r.origin.x>(weakself.view.frame.size.width-r.size.width)?(weakself.view.frame.size.width-r.size.width):r.origin.x;
+                weakself.viewCartOpt.viewShow.frame = r;
+            }];
+        }
+    }];
+    [_viewCartOpt setBeforeClose:^(PopUpVendorView *vmv) {
+        weakself.viewCart.alpha = 1;
+        CGRect r = weakself.viewCartOpt.viewShow.frame;
+        r.size = weakself.viewCart.frame.size;
+        r.origin.x += (weakself.viewCartOpt.viewShow.frame.size.width - r.size.width);
+        weakself.viewCart.frame = r;
+    }];
+    
+    self.viewCartOpt.arrayData = self.orderData;
+    [self.viewCartOpt reloadData];
+    [self.viewCartOpt show];
+    
+//    [_viewCart removeGestureRecognizer:_tapGestureviewKeyBoradCarts];
+//    [self.view addGestureRecognizer:super.tapGestureRecognizer];
+    
 }
 
 -(void) setArrayData:(NSMutableArray *)arrayData{
+    
     _arrayData = [NSMutableArray new];
+    if(!arrayData||![arrayData count]){
+        return;
+    }
     [self setCategroyArrayData:arrayData];
+    [self.collectionViewOrder reloadData];
 }
 
 -(void) setCategroyArrayData:(NSMutableArray *)arrayData{
@@ -187,10 +181,6 @@ NSString *const KeyDatas = @"datas";
         }
     }
     [arrayData removeObjectsInArray:array];
-//    NSMutableArray *arrayAdd = [NSMutableArray new];
-//    for (EntityFood *ef in array) {
-//        [arrayAdd addObject:[ef toJson]];
-//    }
     [_arrayData addObject:array];
     if ([arrayData count]) {
         [self setCategroyArrayData:arrayData];
@@ -212,6 +202,8 @@ NSString *const KeyDatas = @"datas";
 
 //==>UICollectionViewDelegate
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+    CGRect r = [Common getAbsoluteRect:[collectionView cellForItemAtIndexPath:indexPath] relativelyView:self.view];
+    r.origin.y = r.origin.y-collectionView.contentOffset.y;
     
     if (![self isHead:indexPath.section]) {
         NSArray *array = [_arrayData objectAtIndex:indexPath.section];
@@ -222,9 +214,9 @@ NSString *const KeyDatas = @"datas";
             NSNumber *idKeyDic =_food_.keyId;
             if (idKey.intValue == idKeyDic.intValue) {
                 hasParams = true;
-                if (_food_.amount.intValue>=food.amount.intValue) {
-                    goto br;
-                }
+//                if (_food_.amount.intValue>=food.amount.intValue) {
+//                    goto br;
+//                }
                 _food_.amount = [NSNumber numberWithInt:_food_.amount.intValue+1];
                 goto br;
             }
@@ -235,6 +227,8 @@ NSString *const KeyDatas = @"datas";
             [_orderData addObject:foodAdd];
         }
     }
+    
+    
 }
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -324,6 +318,16 @@ NSString *const KeyDatas = @"datas";
 }
 -(float) getAvgValue{
     return APP_W<400?3.0f:4.0f;
+}
+
+-(BOOL) resignFirstResponder{
+    if (_viewCartOpt) {
+        [_viewCartOpt resignFirstResponder];
+    }
+    return [super resignFirstResponder];
+}
+-(void) dealloc{
+    [[ObserverListner getNewInstance] removeWithKey:NSStringFromClass([self class])];
 }
 
 /*

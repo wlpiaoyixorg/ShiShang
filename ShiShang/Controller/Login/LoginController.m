@@ -73,6 +73,13 @@
 -(void) viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     _rectViewFiled = _viewField.frame;
+    NSString *userName = [ConfigManage getUserName];
+    NSString *password = [ConfigManage getPassword];
+    self.textFieldAccount.text = userName;
+    self.textFieldPassword.text = password;
+    if ([NSString isEnabled:userName]&&[NSString isEnabled:password]) {
+        [self onclickLogin];
+    }
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -101,6 +108,9 @@
         return;
     }
     [ActivityIndicatorView showActivityIndicator:nil];
+    
+    [ConfigManage setUserName:userName];
+    [ConfigManage setPassword:password];
     [_userService loginWithUserName:userName password:password success:^(id data, NSDictionary *userInfo) {
         [ActivityIndicatorView hideActivityIndicator];
         if (!data) {
@@ -113,6 +123,7 @@
         }
     } faild:^(id data, NSDictionary *userInfo) {
         [ActivityIndicatorView hideActivityIndicator];
+        [Common showMessage:@"无法连接服务器" Title:@""];
         
     }];
 }

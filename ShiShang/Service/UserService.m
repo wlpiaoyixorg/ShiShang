@@ -1,4 +1,4 @@
-//
+ //
 //  UserService.m
 //  ShiShang
 //
@@ -8,63 +8,74 @@
 
 #define URL_LOGIN @"restful/customer/login"
 #define URL_REGESTER @"restful/customer/register"
+
 #import "UserService.h"
 #import "Common+Expand.h"
 
 
 @implementation UserService
-
+-(void) excuteLoginSuccess:(CallBackNetWorkHTTP) success json:(NSDataResult*) resulte {
+    if (success) {
+        EntityUser *user  = nil;
+        if (resulte&&resulte.code==200) {
+            NSDictionary *json = (NSDictionary*)resulte.data;
+            NSNumber *shopId = [[json objectForKey:@"shop"] objectForKey:@"id"];
+            NSMutableDictionary *customer = [NSMutableDictionary dictionaryWithDictionary:[json objectForKey:@"customer"]];
+            [customer setObject:shopId forKey:KeyUserShopId];
+            if (customer) {
+                user = [EntityUser entityWithJson:customer];
+            }
+        }
+        [ConfigManage setLoginUser:user];
+        success(user,nil);
+    }
+}
 -(void) loginWithUserName:(NSString*) userName password:(NSString*) password success:(CallBackNetWorkHTTP) success faild:(CallBackNetWorkHTTP) faild{
     id<NetWorkHTTPDelegate> nwh = [Common getNetWorkImpl];
     NSString *url = [NSString stringWithFormat:@"%@/%@",BASEURL,URL_LOGIN];
-    [ConfigManage setUserName:userName];
-    [ConfigManage setPassword:password];
     [nwh setRequestString:url];
     [nwh setUserInfo:@{@"success":success,@"faild":faild,@"url":url}];
     [nwh setSuccessCallBack:^(id data, NSDictionary *userInfo) {
-        data = [@{@"id": @101,@"loginName": @"liudonghua",@"name":@"liudonghua",@"plainPassword": @"",@"password":@"2c5f1aef26f38abe8714536a6ba0164e2e680689",@"salt":@"39190ed6f235bf04",@"roles":@"customer",@"registerDate":@"2013-11-11 22:26:17",@"phoneNumber": @"110",@"voucher": @2,@"balance": @4,@"totalConsumed": @0.0} JSONRepresentation];
         CallBackNetWorkHTTP success = [userInfo objectForKey:@"success"];
-        NSObject *result;
+        NSDataResult *result;
         if ([self isSuccessResult:&result data:data]) {
             NSString *key = KEY_CACHE_HTTP_UEL(URL_LOGIN);
-            [ConfigManage setConfigValueByUser:[result JSONRepresentation] Key:key];
+            [ConfigManage setConfigValueByUser:data Key:key];
         }
-        if (success) {
-            EntityUser *user = [EntityUser entityWithJson:(NSDictionary*)result];
-            success(user,userInfo);
-        }
+        [self excuteLoginSuccess:success json:result];
     }];
     [nwh setFaildCallBack:^(id data, NSDictionary *userInfo) {
         CallBackNetWorkHTTP success = [userInfo objectForKey:@"success"];
         CallBackNetWorkHTTP faild = [userInfo objectForKey:@"faild"];
         NSString *key = KEY_CACHE_HTTP_UEL(URL_LOGIN);
-        NSString *cache = [ConfigManage getConfigValueByUser:key];
-        if ([NSString isEnabled:cache]) {
-            EntityUser *user = [EntityUser entityWithJson:[cache JSONValue]];
-            success(user,userInfo);
+        NSDictionary *cache = [ConfigManage getConfigValueByUser:key];
+        NSDataResult *result;
+        if ([NSString isEnabled:cache]&&[self isSuccessResult:&result data:cache]) {
+            [self excuteLoginSuccess:success json:result];
         }else{
             faild(data,userInfo);
+            [[PopUpDialogView initWithTitle:NSLocalizedString(@"popup_default_title", nil) message:NSLocalizedString(@"net_faild", nil) TargetView:[UIApplication sharedApplication].keyWindow delegate:nil cancelButtonTitle:NSLocalizedString(@"popup_default_confirm_name", nil) otherButtonTitles:nil] show];
         }
         
     }];
-    [nwh requestPOST:@{@"username":userName,@"password":password}];
+    [nwh requestPOST:@{@"loginName":userName,@"plainPassword":password}];
 }
 
 -(void) regesiterWithUser:(EntityUser*) user success:(CallBackNetWorkHTTP) success faild:(CallBackNetWorkHTTP) faild{
     id<NetWorkHTTPDelegate> nwh = [Common getNetWorkImpl];
-    NSString *url = [NSString stringWithFormat:@"%@/%@",BASEURL,@"restful/product/get?version_id=1&userID=101&shopID=1"];
+    NSString *url = [NSString stringWithFormat:@"%@/%@",BASEURL,URL_REGESTER];
     [nwh setRequestString:url];
     [nwh setUserInfo:@{@"success":success,@"faild":faild,@"url":url}];
     [nwh setSuccessCallBack:^(id data, NSDictionary *userInfo) {
-        
+    
         CallBackNetWorkHTTP success = [userInfo objectForKey:@"success"];
-        NSObject *result;
+        NSDataResult *result;
         if ([self isSuccessResult:&result data:data]) {
             NSString *key = KEY_CACHE_HTTP_UEL(URL_LOGIN);
             [ConfigManage setConfigValueByUser:[result JSONRepresentation] Key:key];
         }
         if (success) {
-            success(result,userInfo);
+            success(result.data,userInfo);
         }
     }];
     [nwh setFaildCallBack:^(id data, NSDictionary *userInfo) {
@@ -72,10 +83,12 @@
         CallBackNetWorkHTTP faild = [userInfo objectForKey:@"faild"];
         NSString *key = KEY_CACHE_HTTP_UEL(URL_LOGIN);
         NSString *cache = [ConfigManage getConfigValueByUser:key];
-        if ([NSString isEnabled:cache]) {
-            success([cache JSONValue],userInfo);
+        NSDataResult *result;
+        if ([NSString isEnabled:cache]&&[self isSuccessResult:&result data:[cache JSONValue]]) {
+            success(result.data,userInfo);
         }else{
             faild(data,userInfo);
+            [[PopUpDialogView initWithTitle:NSLocalizedString(@"popup_default_title", nil) message:NSLocalizedString(@"net_faild", nil) TargetView:[UIApplication sharedApplication].keyWindow delegate:nil cancelButtonTitle:NSLocalizedString(@"popup_default_confirm_name", nil) otherButtonTitles:nil] show];
         }
         
     }];

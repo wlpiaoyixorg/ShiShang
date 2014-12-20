@@ -23,8 +23,6 @@
 
 - (void)awakeFromNib {
 }
--(void) setSelected:(BOOL)selected{
-}
 -(void) setFood:(EntityFood *)food{
     _food = food;
     _imageViewOrder.imageUrl = _food.pricturePath;

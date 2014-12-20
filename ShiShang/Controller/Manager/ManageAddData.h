@@ -1,13 +1,15 @@
 //
-//  ManagerDataCell.h
+//  ManageAddData.h
 //  ShiShang
 //
-//  Created by wlpiaoyi on 14/11/21.
+//  Created by wlpiaoyi on 14/12/18.
 //  Copyright (c) 2014年 wlpiaoyi. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
+#import "VendorMoveView.h"
 #import "EntityFood.h"
-@interface ManagerDataCell : UICollectionViewCell
+
+@interface ManageAddData : UIView<UITextFieldDelegate>
 @property (nonatomic,strong) EntityFood *food;
 @end

@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface ManagerHeadCell : UICollectionViewCell
-
+@property (nonatomic,strong) NSString *foodType;
 @end
