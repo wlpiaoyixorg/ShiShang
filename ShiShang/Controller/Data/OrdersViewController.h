@@ -7,7 +7,8 @@
 //  订单
 
 #import <UIKit/UIKit.h>
+#import "ShiShangController.h"
 
-@interface OrdersViewController : UITableViewController
+@interface OrdersViewController : ShiShangController
 
 @end

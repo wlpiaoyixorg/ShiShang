@@ -7,7 +7,8 @@
 //  统计
 
 #import <UIKit/UIKit.h>
+#import "ShiShangController.h"
 
-@interface StatisticViewController : UITableViewController
+@interface StatisticViewController : ShiShangController
 
 @end

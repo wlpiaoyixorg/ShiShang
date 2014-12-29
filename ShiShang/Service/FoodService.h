@@ -17,16 +17,16 @@ extern NSString *const KeyFoodProductVersion;
 
 @property (nonatomic,readonly) FDEntityManager *em;
 
--(void) queryAllFoodForSuccess:(CallBackNetWorkHTTP) success faild:(CallBackNetWorkHTTP) faild;
+-(void) queryAllFoodForSuccess:(CallBackHttpUtilRequest) success faild:(CallBackHttpUtilRequest) faild;
 -(NSArray*) queryAllFoodFromDataBase;
 
--(void) presistType:(NSString*) type success:(CallBackNetWorkHTTP) success faild:(CallBackNetWorkHTTP) faild;
--(void) mergeType:(NSString*) type oldType:(NSString*) oldType  success:(CallBackNetWorkHTTP) success faild:(CallBackNetWorkHTTP) faild;
--(void) removeType:(NSString*) type success:(CallBackNetWorkHTTP) success faild:(CallBackNetWorkHTTP) faild;
+-(void) presistType:(NSString*) type success:(CallBackHttpUtilRequest) success faild:(CallBackHttpUtilRequest) faild;
+-(void) mergeType:(NSString*) type oldType:(NSString*) oldType  success:(CallBackHttpUtilRequest) success faild:(CallBackHttpUtilRequest) faild;
+-(void) removeType:(NSString*) type success:(CallBackHttpUtilRequest) success faild:(CallBackHttpUtilRequest) faild;
 
--(void) presistFood:(EntityFood*) food success:(CallBackNetWorkHTTP) success faild:(CallBackNetWorkHTTP) faild;
--(void) mergeFood:(EntityFood*) type oldType:(NSString*) oldType  success:(CallBackNetWorkHTTP) success faild:(CallBackNetWorkHTTP) faild;
--(void) removeFood:(EntityFood*) food success:(CallBackNetWorkHTTP) success faild:(CallBackNetWorkHTTP) faild;
+-(void) presistFood:(EntityFood*) food success:(CallBackHttpUtilRequest) success faild:(CallBackHttpUtilRequest) faild;
+-(void) mergeFood:(EntityFood*) type success:(CallBackHttpUtilRequest) success faild:(CallBackHttpUtilRequest) faild;
+-(void) removeFood:(EntityFood*) food success:(CallBackHttpUtilRequest) success faild:(CallBackHttpUtilRequest) faild;
 
 
 

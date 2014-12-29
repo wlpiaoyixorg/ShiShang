@@ -8,7 +8,6 @@
 
 #import "ScrollViewOpt.h"
 #import "Common+Expand.h"
-#import "UIView+AutoRect.h"
 
 @implementation ScrollViewOpt{
     id synaddviews;

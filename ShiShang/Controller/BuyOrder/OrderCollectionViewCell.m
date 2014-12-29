@@ -7,7 +7,7 @@
 //
 
 #import "OrderCollectionViewCell.h"
-#import "EMAsyncImageView.h"
+#import "AsyncImageView.h"
 #import "Common+Expand.h"
 #import "EntityFood.h"
 
@@ -17,7 +17,7 @@
 @interface OrderCollectionViewCell()
 @property (strong, nonatomic) IBOutlet UILabel *lableName;
 @property (strong, nonatomic) IBOutlet UILabel *lablePrice;
-@property (strong, nonatomic) IBOutlet EMAsyncImageView *imageViewOrder;
+@property (strong, nonatomic) IBOutlet AsyncImageView *imageViewOrder;
 @end
 @implementation OrderCollectionViewCell
 

@@ -9,7 +9,7 @@
 #define KEY_CACHE_HTTP_UEL(_URL_) [NSString stringWithFormat:@"HTTPHEAD_%@",_URL_];
 
 #import <Foundation/Foundation.h>
-#import "NetWork.h"
+#import "HttpUtil.h"
 #import "NSDataResult.h"
 
 

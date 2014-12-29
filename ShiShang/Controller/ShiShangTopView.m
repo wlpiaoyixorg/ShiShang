@@ -8,13 +8,11 @@
 
 #import "ShiShangTopView.h"
 #import "Common.h"
-#import "UIView+AutoRect.h"
 #import "SkinDictionary.h"
-#import "UILabel+Param.h"
 @implementation ShiShangTopView
 -(id) init{
     if (self=[super init]) {
-        CGRect r = CGRectMake(0, 0, APP_W, 44);
+        CGRect r = CGRectMake(0, 0, appWidth(), 44);
         self.frame = r;
         [self autoresizingMask_BLR];
         [self initParam];

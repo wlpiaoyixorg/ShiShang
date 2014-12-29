@@ -6,8 +6,8 @@
 //  Copyright (c) 2014年 wlpiaoyi. All rights reserved.
 //
 
-#import "ShiShangController.h"
+#import "ShiShangNavController.h"
 
-@interface RegeditController : ShiShangController<UITextFieldDelegate>
+@interface RegeditController : ShiShangNavController<UITextFieldDelegate>
 
 @end

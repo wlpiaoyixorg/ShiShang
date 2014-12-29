@@ -7,6 +7,7 @@
 //
 
 #import "OrdersViewCell.h"
+#import "EntityOrder.h"
 
 @interface OrdersViewCell()
 @property (weak, nonatomic) IBOutlet UILabel *goodsName;
@@ -17,16 +18,10 @@
 
 
 @implementation OrdersViewCell
-- (void)awakeFromNib
-{
-    
-}
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
     [super setSelected:selected animated:animated];
-    
-    // Configure the view for the selected state
 }
 
 + (instancetype)settingCellWithTableView:(UITableView *)tableView
@@ -57,9 +52,9 @@
 -(void)setDict:(NSDictionary *)dict
 {
     _dict = dict;
-    self.goodsName.text = dict[@"title"];
-    NSString *price = [NSString stringWithFormat:@"¥ %@/份",dict[@"price"]];
+    self.goodsName.text = dict[KeyOrderProductName];
+    NSString *price = [NSString stringWithFormat:@"¥ %@/份",dict[KeyOrderProductPrice]];
     self.price.text = price;
-    self.quantity.text = dict[@"num"];
+    self.quantity.text = dict[KeyOrderAmount];
 }
 @end

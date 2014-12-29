@@ -6,9 +6,9 @@
 //  Copyright (c) 2014年 wlpiaoyi. All rights reserved.
 //
 
-#import "PopUpVendorView.h"
+#import "PopUpMovableView.h"
 
-@interface BuyOrderCartView : PopUpVendorView<UITableViewDelegate,UITableViewDataSource>
+@interface BuyOrderCartView : PopUpMovableView<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic,strong) NSMutableArray *arrayData;
 @property (nonatomic,strong) NSString *deskCode;
 @property (nonatomic,readonly) NSNumber *totalPrice;

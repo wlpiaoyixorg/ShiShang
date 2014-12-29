@@ -11,85 +11,88 @@
 #import "HeaderView.h"
 #import "FooterView.h"
 #import "BaseTableView.h"
-#import "ShiShangController.h"
+#import "EntityOrder.h"
+#import "OrdersService.h"
 
+#define SectionHeaderHeight 30.
+#define SectionFooterHeight 80.
 
-static NSString *const OrderNo = @"roderNo";
-static NSString *const OrderTime = @"dataTime";
-static NSString *const OrderTitle = @"title";
-static NSString *const OrderNum = @"num";
-static NSString *const OrderAmount = @"amount";
-static NSString *const OrderPayable = @"payable";
-static NSString *const OrderInfo = @"info";
-static NSString *const OrderPrice = @"price";
-static NSString *const OrderDesc = @"desc";
-
-@interface OrdersViewController ()
+@interface OrdersViewController () <UITableViewDataSource,UITableViewDelegate>
 {
-    NSArray *datas;
+    NSArray *_datas;
 }
+@property (nonatomic ,weak) UITableView *tableView;
 @end
 
 @implementation OrdersViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.tableView  = [[BaseTableView alloc] init];
-    datas = @[@{OrderNo:@"11000",OrderTime:@"2014-10-31 15:33",
-                OrderInfo:@[@{OrderTitle:@"红烧肉",OrderPrice:@"29.3",OrderNum:@"1"}],
-                OrderAmount:@"44.8",OrderPayable:@"44.8",OrderDesc:@""},
-              @{OrderNo:@"11001",OrderTime:@"2014-10-22 11:33",
-                OrderInfo:@[@{OrderTitle:@"鲍鱼",OrderPrice:@"29.3",OrderNum:@"1"},
-                          @{OrderTitle:@"鱼刺",OrderPrice:@"229.3",OrderNum:@"2"}],
-                OrderAmount:@"100.8",OrderPayable:@"100.8",OrderDesc:@""}];
+    UITableView *tableView  = [[BaseTableView alloc] initWithFrame:self.view.frame];
+    tableView.delegate = self;
+    tableView.dataSource = self;
+    tableView.allowsSelection = NO;
+    [self.view addSubview:tableView];
+    
+    self.tableView = tableView;
 }
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    self.view.frameHeight = APP_H-SSCON_TOP-SSCON_BUTTOM - SSCON_TIT;
+    self.view.frameHeight = appHeight()-SSCON_TOP-SSCON_BUTTOM - SSCON_TIT;
+    
+    OrdersService *ordersService = [OrdersService new];
+    [ordersService queryOrdersForSuccess:^(id data, NSDictionary *userInfo) {
+        if (data && ![data isEqualToString:@""]) {
+            _datas = data;
+            [self.tableView reloadData];
+        }
+        
+    } faild:^(id data, NSDictionary *userInfo) {
+        
+    }];
 }
 
 #pragma mark - Table view data source
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return datas.count;
+    return _datas.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
-    NSDictionary *dict = datas[section];
-    NSArray *array = dict[OrderInfo];
+    NSDictionary *dict = _datas[section];
+    NSArray *array = dict[KeyOrderItems];
     return array.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     // 1.创建一个ILSettingCell
     OrdersViewCell *cell = [OrdersViewCell settingCellWithTableView:tableView];
-    NSDictionary *dict = datas[indexPath.section];
-    NSArray *rowArray = dict[OrderInfo];
+    NSDictionary *dict = _datas[indexPath.section];
+    NSArray *rowArray = dict[KeyOrderItems];
     NSDictionary *rowDict = rowArray[indexPath.row];
     cell.dict = rowDict;
     
     return cell;
 }
 
-
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    NSDictionary *dict = datas[section];
-    NSString *title = [NSString stringWithFormat:@"订单号:%@",dict[OrderNo]];
+    NSDictionary *dict = _datas[section];
+    NSString *title = [NSString stringWithFormat:@"订单号:%@",dict[KeyOrderId]];
     
     HeaderView *headerView = [[HeaderView alloc] init];
     headerView.orderNo = title;
-    headerView.dateTime = dict[OrderTime];
+    headerView.dateTime = dict[KeyOrderDeliverTime];
     return headerView;
 }
 
 -(UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
 {
-    NSDictionary *dict = datas[section];
-    NSString *amount = [NSString stringWithFormat:@"合计: ¥%@",dict[OrderAmount]];
-    NSString *payable = [NSString stringWithFormat:@"应付: ¥%@",dict[OrderPayable]];
-    NSString *desc = [NSString stringWithFormat:@"选填: %@",dict[OrderDesc]];
+    NSDictionary *dict = _datas[section];
+    NSString *amount = [NSString stringWithFormat:@"合计: ¥%@",dict[KeyOrderTotalPay]];
+    NSString *payable = [NSString stringWithFormat:@"应付: ¥%@",dict[KeyOrderNeedPay]];
+    NSString *desc = [NSString stringWithFormat:@"选填: %@",dict[KeyOrderExtranInfo]];
     
     FooterView *footerView = [[FooterView alloc] init];
     footerView.amount = amount;
@@ -100,17 +103,29 @@ static NSString *const OrderDesc = @"desc";
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return 30.0;
+    return SectionHeaderHeight;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
-    return 80.0;
+    return SectionFooterHeight;
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    if (scrollView == self.tableView)
+    {
+        CGFloat sectionHeaderHeight = SectionHeaderHeight;
+        if (scrollView.contentOffset.y <= sectionHeaderHeight&&scrollView.contentOffset.y>=0) {
+            scrollView.contentInset = UIEdgeInsetsMake(-scrollView.contentOffset.y, 0, 0, 0);
+        } else if (scrollView.contentOffset.y >= sectionHeaderHeight) {
+            scrollView.contentInset = UIEdgeInsetsMake(-sectionHeaderHeight, 0, 0, 0);
+        }
+    }
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
-
 
 @end

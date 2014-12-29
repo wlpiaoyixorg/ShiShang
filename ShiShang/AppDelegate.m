@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "LoginController.h"
+#import "DeviceOrientationListener.h"
 
 @interface AppDelegate ()
 
@@ -22,10 +23,9 @@
     NSLog(@"%@", languages);
     
     NSString *arg = NSLocalizedString(@"net_faild", nil);
-    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     UIViewController *c = [[LoginController alloc] initWithNibName:@"LoginController" bundle:nil];
-    [Common setRootController:c window:self.window];
+    self.window = [Utils setShiShangController:c];
     return YES;
 }
 

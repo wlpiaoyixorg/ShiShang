@@ -9,12 +9,7 @@
 
 #define BASEURL @"http://115.29.186.152"
 
-#import <Foundation/Foundation.h>
 #import "Common.h"
 #import "ConfigManage+Expand.h"
+#import "Utils+Expand.h"
 
-@interface Common(Expand)
-+(id) getNetWorkImpl;
-+(void) setRootController:(UIViewController*) c window:(UIWindow*) window;
-+(id) getEntityManger;
-@end

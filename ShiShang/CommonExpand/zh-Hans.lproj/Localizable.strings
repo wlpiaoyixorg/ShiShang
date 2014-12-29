@@ -5,10 +5,10 @@
   Created by wlpiaoyi on 14/12/7.
   Copyright (c) 2014年 wlpiaoyi. All rights reserved.
 */
-
-"popup_default_title" = "温馨提示";
-"popup_default_confirm_name" = "确定";
-"popup_default_cancel_name" = "取消";
 "net_faild" = "网络请求失败！";
+"shopId_opt_null" = "商店ID不能为空!";
 "foodtype_opt_null" = "请输入产品类型!";
 "foodtype_opt_msg" = "正在保存产品类型...";
+"foodname_opt_null" = "请输入产品名称";
+"foodprice_opt_null" = "请输入产品价格";
+"foodID_opt_null" = "产品ID不能为空!";

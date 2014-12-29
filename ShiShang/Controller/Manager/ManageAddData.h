@@ -7,9 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "VendorMoveView.h"
+#import "PopUpMovableDialogView.h"
 #import "EntityFood.h"
 
 @interface ManageAddData : UIView<UITextFieldDelegate>
 @property (nonatomic,strong) EntityFood *food;
+-(EntityFood*) getFood;
 @end

@@ -7,6 +7,7 @@
 //
 
 #import "ManageAddData.h"
+#import "NSString+Expand.h"
 
 @interface ManageAddData()
 @property (assign,nonatomic) id target;
@@ -33,8 +34,26 @@
             [_target respondsToSelector:_action];
         }
     }
-    
     return YES;
+}
+
+-(EntityFood*) getFood{
+    if (_food) {
+        _food.name = _textFieldName.text;
+        if ([NSString isEnabled:_textFiledPrice.text]) {
+            _food.price = [NSNumber numberWithFloat:_textFiledPrice.text.floatValue];
+        }
+    }
+    return _food;
+}
+-(void) setFood:(EntityFood *)food{
+    _food = [EntityFood entityWithJson:[food toJson]];
+    if (_food.name) {
+        _textFieldName.text = _food.name;
+    }
+    if(_food.price){
+        _textFiledPrice.text = _food.price.stringValue;
+    }
 }
 
 

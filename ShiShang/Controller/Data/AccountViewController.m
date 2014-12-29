@@ -7,6 +7,7 @@
 //
 
 #import "AccountViewController.h"
+#import "Common+Expand.h"
 
 @interface AccountViewController ()
 {
@@ -27,11 +28,15 @@
 #pragma mark - init
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.userName.text = [ConfigManage getLoginUser].phoneNumber;
+    self.nickName.text = [ConfigManage getLoginUser].phoneNumber;
+    self.merchantName.text = [ConfigManage getLoginUser].phoneNumber;
+    self.telephoneNum.text = [ConfigManage getLoginUser].phoneNumber;
 }
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    self.view.frameHeight = APP_H-SSCON_TOP-SSCON_BUTTOM - SSCON_TIT;
+    self.view.frameHeight = appHeight()-SSCON_TOP-SSCON_BUTTOM - SSCON_TIT;
 }
 
 - (void)didReceiveMemoryWarning {

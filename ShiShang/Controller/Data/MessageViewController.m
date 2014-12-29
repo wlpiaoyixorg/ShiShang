@@ -29,7 +29,7 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    self.view.frameHeight = APP_H-SSCON_TOP-SSCON_BUTTOM - SSCON_TIT;
+    self.view.frameHeight = appHeight()-SSCON_TOP-SSCON_BUTTOM - SSCON_TIT;
 }
 
 
@@ -37,7 +37,6 @@
 {
     [super viewDidLoad];
     [self setTitle:@"消 息"];
-    [super showReturnButton:NO];
 //    self.view.backgroundColor = [UIColor whiteColor];
 //    UISearchBar *search = [[UISearchBar alloc] init];
 //    search.delegate = self;

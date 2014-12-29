@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ShiShangController.h"
 
-@interface SettingViewController : UITableViewController
+@interface SettingViewController : ShiShangController
 
 @end

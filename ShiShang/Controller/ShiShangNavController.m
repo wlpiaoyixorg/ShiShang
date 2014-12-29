@@ -1,51 +1,28 @@
 //
-//  ShiShangController.m
+//  ShiShangNavController.m
 //  ShiShang
 //
-//  Created by wlpiaoyi on 14-11-3.
+//  Created by wlpiaoyi on 14/12/27.
 //  Copyright (c) 2014年 wlpiaoyi. All rights reserved.
 //
 
-#import "ShiShangController.h"
+#import "ShiShangNavController.h"
 
+float navigationBarHeight = 44;
 
-@interface ShiShangController ()
+@interface ShiShangNavController ()
+
 @end
 
-@implementation ShiShangController
+@implementation ShiShangNavController
 
 - (void)viewDidLoad {
     _dicskin = [SkinDictionary getSingleInstance];
     [super viewDidLoad];
-    if ([NSString isEnabled:super.title]) {
-        [self setTitle:super.title];
-    }
-    [self.navigationController setNavigationBarHidden:YES];
-    [Utils setStatusBarHidden:NO];
     self.view.backgroundColor = [UIColor whiteColor];
-}
--(void) setHiddenCloseButton:(BOOL) hidden{
-    [_topView.buttonReback setHidden:hidden];
-}
--(void) setHiddenTopView:(BOOL) hidden{
-    [_topView setHidden:hidden];
-}
--(void) setTitle:(NSString *)title{
-    [super setTitle:title];
-    if (!_topView) {
-        _topView = [ShiShangTopView new];
-        [_topView.buttonReback addTarget:self action:@selector(backPreviousController)];
-        [_topView.buttonReback setHidden:YES];
-        [self.view addSubview:_topView];
-    }
-    if ([NSString isEnabled:title]) {
-        _topView.lableTitle.text = title;
-    }
 }
 -(void) viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    [self.navigationController setNavigationBarHidden:YES];
-    [Utils setStatusBarHidden:NO];
     
     self.navigationController.navigationBar.barTintColor = [UIColor clearColor];
     [self.navigationController.navigationBar setBackgroundImage:[[SkinDictionary getSingleInstance] getSkinImage:@"global_topbar_bg.png"] forBarMetrics:UIBarMetricsDefault];

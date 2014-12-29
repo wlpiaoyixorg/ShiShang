@@ -42,9 +42,9 @@
 @implementation RegeditController
 
 - (void)viewDidLoad {
-    [super setTitle:@"注 册"];
     [super viewDidLoad];
-    
+    [super setTitle:@"注 册"];
+    [super setRightButtonName:@"完成" action:@selector(onclickRegedit)];
     _userService = [UserService new];
     
     [_viewBaseInfo setCornerRadiusAndBorder:5 BorderWidth:0.5 BorderColor:[self.dicskin getSkinColor:@"bordercolordefault"]];
@@ -78,7 +78,7 @@
         if (!tf) {
             return ;
         }
-        CGPoint p = [tf getAbsoluteOrigin:weakself.view];
+        CGPoint p = [tf getAbsoluteOrigin:[Utils getWindow]];
         float offy = p.y+tf.frame.size.height+keyBoardFrame.size.height-weakself.view.frame.size.height;
         if (offy>0) {
             CGRect r = weakself.view.frame;
@@ -90,7 +90,7 @@
         
     } End:^(CGRect keyBoardFrame) {
         CGRect r = weakself.view.frame;
-        r.origin.y = 0;
+        r.origin.y = navigationBarHeight;
         weakself.view.frame = r;
     }];
     
@@ -142,25 +142,22 @@
     }
     
     if (![NSString isEnabled:user.phoneNumber]) {
-        PopUpDialogView *pdv = [PopUpDialogView initWithTitle:@"提示" message:@"请输入手机号!" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
-        [pdv show];
+        [Utils showAlert:@"请输入手机号!" title:nil];
         return;
     }
     if (![NSString isEnabled:user.plainPassword]) {
-        PopUpDialogView *pdv = [PopUpDialogView initWithTitle:@"提示" message:@"请输入密码!" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
-        [pdv show];
+        [Utils showAlert:@"请输入密码!" title:nil];
         return;
     }
     if (![NSString isEnabled:passowrd2]) {
-        PopUpDialogView *pdv = [PopUpDialogView initWithTitle:@"提示" message:@"请确认密码!" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
-        [pdv show];
+        [Utils showAlert:@"请确认密码!" title:nil];
         return;
     }
     if(![user.plainPassword isEqualToString:passowrd2]){
-        PopUpDialogView *pdv = [PopUpDialogView initWithTitle:@"提示" message:@"两次密码出入不一致!" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
-        [pdv show];
+        [Utils showAlert:@"两次密码出入不一致!" title:nil];
         return;
     }
+    user.name = user.loginName;
     [_userService regesiterWithUser:user success:^(id data, NSDictionary *userInfo) {
         
     } faild:^(id data, NSDictionary *userInfo) {

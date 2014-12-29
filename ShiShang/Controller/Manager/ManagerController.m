@@ -13,11 +13,10 @@
 #import "ManagerHeadCell.h"
 #import "ManagerOptCell.h"
 #import "ManagerAddType.h"
-#import "PopUpVendorView.h"
 #import "ObserverListner.h"
 #import "BuyOrdersController.h"
 #import "ManageAddData.h"
-#import "PopUpDialogVendorView.h"
+#import "ShiShangDataPickerView.h"
 
 @interface ManagerController ()
 @property (strong, nonatomic) IBOutlet UIButton *buttionShowType;
@@ -31,7 +30,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setTitle:@"管 理"];
-    [self showReturnButton:NO];
     
     _foodService = [FoodService new];
     
@@ -54,10 +52,9 @@
         }
     } End:^(CGRect keyBoardFrame) {
         if (weakself.dialogShow) {
-            CGRect r = weakself.dialogShow.viewShow.frame;
-            float offy = r.origin.y+r.size.height-keyBoardFrame.origin.y;
+            float offy = (weakself.dialogShow.frameHeight-weakself.dialogShow.viewShow.frameHeight)/2+weakself.dialogShow.viewShow.frameHeight-(boundsHeight()-keyBoardFrame.size.height);
             if (offy>0) {
-                weakself.dialogShow.frameY = -offy;
+                weakself.dialogShow.viewShow.frameY = (weakself.dialogShow.frameHeight-weakself.dialogShow.viewShow.frameHeight)/2 - offy;
             }
         }
     }];
@@ -68,22 +65,26 @@
         }
         
     } End:^(CGRect keyBoardFrame) {
-        weakself.dialogShow.frameY = 0;
+        weakself.dialogShow.viewShow.frameY = (weakself.dialogShow.frameHeight-weakself.dialogShow.viewShow.frameHeight)/2;
     }];
+    
+    
     
     // Do any additional setup after loading the view from its nib.
 }
 -(void) viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     CGRect r = self.view.frame;
-    r.size.height = APP_H-SSCON_BUTTOM;
+    r.size.height = appHeight()-SSCON_BUTTOM;
     self.view.frame = r;
     [self reloadData];
+//    ShiShangDataPickerView *typeView= [[NSBundle mainBundle] loadNibNamed:NSStringFromClass([ShiShangDataPickerView class]) owner:self options:nil].firstObject;
+//    [self.view addSubview:typeView];
 }
 -(void) showTypeView{
      ManagerAddType *typeView= [[NSBundle mainBundle] loadNibNamed:NSStringFromClass([ManagerAddType class]) owner:self options:nil].firstObject;
     CGRect r = typeView.frame;
-    if (APP_W<400) {
+    if (appWidth()<400) {
         r.size = CGSizeMake(260, 260*r.size.height/r.size.width);
     }
     typeView.frame = r;
@@ -107,7 +108,7 @@
 -(void) showTypeView:(NSString*) type{
     ManagerAddType *typeView= [[NSBundle mainBundle] loadNibNamed:NSStringFromClass([ManagerAddType class]) owner:self options:nil].firstObject;
     CGRect r = typeView.frame;
-    if (APP_W<400) {
+    if (appWidth()<400) {
         r.size = CGSizeMake(260, 260*r.size.height/r.size.width);
     }
     typeView.typeLast  = type;
@@ -121,7 +122,21 @@
             }
                 break;
             case 1:{
-                [weakself removeType];
+                
+                PopUpDialogVendorView *alert =[PopUpDialogVendorView alertWithMessage:@"要删除当前类型吗？" title:nil onclickBlock:^(PopUpDialogVendorView *dialogView, NSInteger buttonIndex) {
+                    switch (buttonIndex) {
+                        case 0:
+                            [weakself removeType:[dialogView.userDic objectForKey:@"type"]];
+                            break;
+                            
+                        default:
+                            break;
+                    }
+                    
+                } buttonNames:@"删除",@"取消",nil];
+                NSString *oldType = ((ManagerAddType*)_dialogShow.dialogContext).typeLast;
+                alert.userDic = @{@"type":oldType};
+                [alert show];
             }
                 break;
             default:{
@@ -133,22 +148,25 @@
     } buttonNames:@"确定",@"删除",@"取消",nil];
     [_dialogShow show];
 }
--(void) showDataView:(EntityFood*) food{
+-(void) showDataViewWithFood:(EntityFood*) food{
     ManageAddData *dataView = [[NSBundle mainBundle] loadNibNamed:NSStringFromClass([ManageAddData class]) owner:self options:nil].firstObject;
     CGRect r = dataView.frame;
-    if (APP_W<400) {
+    if (appWidth()<400) {
         r.size = CGSizeMake(260, 260*r.size.height/r.size.width);
     }
     dataView.frame = r;
+    dataView.food = food;
     
-    
+    __weak typeof(self) weakself = self;
     _dialogShow = [PopUpDialogVendorView dialogWithView:dataView onclickBlock:^(PopUpDialogVendorView *dialogView, NSInteger buttonIndex) {
         _dialogShow = nil;
         switch (buttonIndex) {
             case 0:{
+                [weakself mergeFood:[((ManageAddData*)dialogView.dialogContext) getFood]];
             }
                 break;
             case 1:{
+                [weakself removeFood:[((ManageAddData*)dialogView.dialogContext) getFood]];
             }
                 break;
                 
@@ -160,56 +178,124 @@
     [_dialogShow show];
     
 }
+-(void) showDataViewWithType:(NSString*) type{
+    ManageAddData *dataView = [[NSBundle mainBundle] loadNibNamed:NSStringFromClass([ManageAddData class]) owner:self options:nil].firstObject;
+    CGRect r = dataView.frame;
+    if (appWidth()<400) {
+        r.size = CGSizeMake(260, 260*r.size.height/r.size.width);
+    }
+    dataView.frame = r;
+    EntityFood *food = [EntityFood entityWithJson:@{KeyFoodType:type}];
+    dataView.food = food;
+    
+    __weak typeof(self) weakself = self;
+    _dialogShow = [PopUpDialogVendorView dialogWithView:dataView onclickBlock:^(PopUpDialogVendorView *dialogView, NSInteger buttonIndex) {
+        _dialogShow = nil;
+        switch (buttonIndex) {
+            case 0:{
+                [weakself persistFood:[((ManageAddData*)dialogView.dialogContext) getFood]];
+            }
+                break;
+                
+            default:{
+            }
+                break;
+        }
+    } buttonNames:@"确定",@"取消",nil];
+    [_dialogShow show];
+    
+}
 -(void) persistType{
    NSString *type = ((ManagerAddType*)_dialogShow.dialogContext).textFieldFoodType.text;
     if (![NSString isEnabled:type]) {
-        [Common showMessage:NSLocalizedString(@"foodtype_opt_null", nil) Title:nil];
+        [Utils showAlert:NSLocalizedString(@"foodtype_opt_null", nil) title:nil];
         return;
     }
-    [ActivityIndicatorView showActivityIndicator:NSLocalizedString(@"foodtype_opt_msg", nil)];
+    [Utils showLoading:NSLocalizedString(@"foodtype_opt_msg", nil)];
     [_foodService presistType:type success:^(id data, NSDictionary *userInfo) {
-        [ActivityIndicatorView hideActivityIndicator];
+        [Utils hiddenLoading];
         [self reloadData];
     } faild:^(id data, NSDictionary *userInfo) {
-        [ActivityIndicatorView hideActivityIndicator];
+        [Utils hiddenLoading];
     }];
 }
 -(void) mergType{
     NSString *type = ((ManagerAddType*)_dialogShow.dialogContext).textFieldFoodType.text;
     NSString *oldType = ((ManagerAddType*)_dialogShow.dialogContext).typeLast;
     if (![NSString isEnabled:type]) {
-        [Common showMessage:NSLocalizedString(@"foodtype_opt_null", nil) Title:nil];
+        [Utils showAlert:NSLocalizedString(@"foodtype_opt_null", nil) title:nil];
         return;
     }
-    [ActivityIndicatorView showActivityIndicator:NSLocalizedString(@"foodtype_opt_msg", nil)];
+    [Utils showLoading:NSLocalizedString(@"foodtype_opt_msg", nil)];
     [_foodService mergeType:type oldType:oldType success:^(id data, NSDictionary *userInfo) {
-        [ActivityIndicatorView hideActivityIndicator];
+        [Utils hiddenLoading];
         [self reloadData];
     } faild:^(id data, NSDictionary *userInfo) {
-        [ActivityIndicatorView hideActivityIndicator];
+        [Utils hiddenLoading];
     }];
 }
--(void) removeType{
-    NSString *oldType = ((ManagerAddType*)_dialogShow.dialogContext).typeLast;
+-(void) removeType:(NSString*) oldType{
     if (![NSString isEnabled:oldType]) {
-        [Common showMessage:NSLocalizedString(@"foodtype_opt_null", nil) Title:nil];
+        [Utils showAlert:NSLocalizedString(@"foodtype_opt_null", nil) title:nil];
         return;
     }
-    [ActivityIndicatorView showActivityIndicator:NSLocalizedString(@"foodtype_opt_msg", nil)];
+    [Utils showLoading:NSLocalizedString(@"foodtype_opt_msg", nil)];
     [_foodService removeType:oldType success:^(id data, NSDictionary *userInfo) {
-        [ActivityIndicatorView hideActivityIndicator];
+       [Utils hiddenLoading];
         [self reloadData];
     } faild:^(id data, NSDictionary *userInfo) {
-        [ActivityIndicatorView hideActivityIndicator];
+       [Utils hiddenLoading];
         
     }];
+}
+-(void) persistFood:(EntityFood*) food{
+    @try {
+        [_foodService presistFood:food success:^(id data, NSDictionary *userInfo) {
+           [Utils hiddenLoading];
+            [self reloadData];
+        } faild:^(id data, NSDictionary *userInfo) {
+           [Utils hiddenLoading];
+        }];
+        [Utils showLoading:NSLocalizedString(@"foodtype_opt_msg", nil)];
+    }
+    @catch (NSException *exception) {
+        [Utils showAlert:exception.reason title:nil];
+    }
     
+}
+-(void) mergeFood:(EntityFood*) food{
+    @try {
+        [_foodService mergeFood:food success:^(id data, NSDictionary *userInfo) {
+           [Utils hiddenLoading];
+            [self reloadData];
+        } faild:^(id data, NSDictionary *userInfo) {
+           [Utils hiddenLoading];
+        }];
+        [Utils showLoading:NSLocalizedString(@"foodtype_opt_msg", nil)];
+    }
+    @catch (NSException *exception) {
+        [Utils showAlert:exception.reason title:nil];
+    }
+}
+-(void) removeFood:(EntityFood*) food{
+    @try {
+        [_foodService removeFood:food success:^(id data, NSDictionary *userInfo) {
+           [Utils hiddenLoading];
+            [self reloadData];
+        } faild:^(id data, NSDictionary *userInfo) {
+           [Utils hiddenLoading];
+        }];
+        [Utils showLoading:NSLocalizedString(@"foodtype_opt_msg", nil)];
+    }
+    @catch (NSException *exception) {
+        [Utils showAlert:exception.reason title:nil];
+    }
 }
 
 
 -(void) setArrayData:(NSMutableArray *)arrayData{
     _arrayData = [NSMutableArray new];
-    if(!arrayData||![arrayData count]){
+    if(!arrayData){
         return;
     }
     [self setCategroyArrayData:arrayData];
@@ -223,15 +309,17 @@
     for (EntityFood *ef in arrayData) {
         if (!type) {
             type = (ef.type?ef.type:@"unkwon");
-            [_arrayData addObject:@{KeyFoodType:type}];
         }
         if ([ef.type isEqualToString:type]) {
             [array addObject:ef];
         }
     }
-    [array addObject:type];
     [arrayData removeObjectsInArray:array];
-    [_arrayData addObject:array];
+    if (type) {
+        [array addObject:type];
+        [_arrayData addObject:@{KeyFoodType:type}];
+        [_arrayData addObject:array];
+    }
     if ([arrayData count]) {
         [self setCategroyArrayData:arrayData];
     }
@@ -247,7 +335,7 @@
         NSArray *array = [_arrayData objectAtIndex:indexPath.section];
         if (indexPath.row==[array count]-1) {
         }else{
-            [self showDataView:[array objectAtIndex:indexPath.row]];
+            [self showDataViewWithFood:[array objectAtIndex:indexPath.row]];
         }
     }
     
@@ -293,7 +381,7 @@
             ManagerOptCell *cell=[collectionView dequeueReusableCellWithReuseIdentifier:@"ManagerOptCell" forIndexPath:indexPath];
             cell.foodType = foodtype;
             [cell setCallBackManagerOptReturn:^(NSString *foodType) {
-                [Common showMessage:foodType Title:nil];
+                [self showDataViewWithType:foodType];
             }];
             return cell;
         }else{
@@ -358,15 +446,17 @@
     return off;
 }
 -(float) getAvgValue{
-    return APP_W<400?3.0f:4.0f;
+    return appWidth()<400?3.0f:4.0f;
 }
 -(void) reloadData{
+    [Utils showLoading:nil];
     [_foodService queryAllFoodForSuccess:^(id data, NSDictionary *userInfo) {
+        [Utils hiddenLoading];
         if (data) {
             self.arrayData = data;
         }
     } faild:^(id data, NSDictionary *userInfo) {
-        
+        [Utils hiddenLoading];
     }];
 }
 

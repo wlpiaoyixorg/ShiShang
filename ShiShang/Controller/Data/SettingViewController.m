@@ -7,9 +7,8 @@
 //
 
 #import "SettingViewController.h"
-#import "ShiShangController.h"
 
-@interface SettingViewController()
+@interface SettingViewController() <UITableViewDataSource,UITableViewDelegate>
 {
     NSArray *_dataArray;
 }
@@ -21,13 +20,18 @@
 -(void)viewDidLoad
 {
     [super viewDidLoad];
+    UITableView *tableView = [[UITableView alloc] initWithFrame:self.view.frame];
+    tableView.delegate = self;
+    tableView.dataSource = self;
+    tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    tableView.bounces = NO;
+    [self.view addSubview:tableView];
     _dataArray = @[@{@"title":@"意见反馈"},@{@"title":@"关于我们"}];
-    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
 }
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    self.view.frameHeight = APP_H-SSCON_TOP-SSCON_BUTTOM - SSCON_TIT;
+    self.view.frameHeight = appHeight()-SSCON_TOP-SSCON_BUTTOM - SSCON_TIT;
 }
 
 #pragma mark - Table view data source

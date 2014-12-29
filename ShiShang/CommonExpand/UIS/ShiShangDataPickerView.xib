@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="ShiShangDataPickerView">
+            <rect key="frame" x="0.0" y="0.0" width="260" height="422"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="yEz-Nq-dSS">
+                    <rect key="frame" x="0.0" y="206" width="260" height="216"/>
+                    <color key="backgroundColor" red="0.63188449589999995" green="0.63188449589999995" blue="0.63188449589999995" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="216" id="LaK-Il-jkY"/>
+                    </constraints>
+                    <date key="date" timeIntervalSinceReferenceDate="441383791.240897">
+                        <!--2014-12-27 14:36:31 +0000-->
+                    </date>
+                    <date key="minimumDate" timeIntervalSinceReferenceDate="-31626000">
+                        <!--1999-12-31 23:00:00 +0000-->
+                    </date>
+                    <date key="maximumDate" timeIntervalSinceReferenceDate="1167562800">
+                        <!--2037-12-31 11:00:00 +0000-->
+                    </date>
+                </datePicker>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3wo-5f-sr4">
+                    <rect key="frame" x="0.0" y="0.0" width="260" height="178"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="星期六" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aJN-mM-Ep1">
+                            <rect key="frame" x="0.0" y="0.0" width="260" height="25"/>
+                            <color key="backgroundColor" red="0.63188449585635365" green="0.63188449585635365" blue="0.63188449585635365" alpha="1" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="25" id="sDc-NB-aRN"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="十二月" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ls5-F1-l2B">
+                            <rect key="frame" x="0.0" y="50" width="260" height="21"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="260" id="IBn-bg-d1h"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                            <color key="textColor" red="0.52156718150000003" green="0.73702952349999995" blue="0.69371916310000004" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2014" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cWm-Ad-O7w">
+                            <rect key="frame" x="0.0" y="157" width="260" height="21"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="21" id="zuZ-UT-sf3"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                            <color key="textColor" red="0.63188449589999995" green="0.63188449589999995" blue="0.63188449589999995" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="27" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eBf-Bb-TGd">
+                            <rect key="frame" x="0.0" y="79" width="260" height="70"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="70" id="rSb-2q-WTE"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="72"/>
+                            <color key="textColor" red="0.52156718148800696" green="0.73702952348066297" blue="0.69371916310157011" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="ls5-F1-l2B" secondAttribute="trailing" id="2es-T1-quG"/>
+                        <constraint firstItem="eBf-Bb-TGd" firstAttribute="top" secondItem="ls5-F1-l2B" secondAttribute="bottom" constant="8" id="9hv-EB-Jn2"/>
+                        <constraint firstItem="aJN-mM-Ep1" firstAttribute="top" secondItem="3wo-5f-sr4" secondAttribute="top" id="W88-cV-He4"/>
+                        <constraint firstAttribute="trailing" secondItem="eBf-Bb-TGd" secondAttribute="trailing" id="WLW-R4-TMv"/>
+                        <constraint firstAttribute="trailing" secondItem="cWm-Ad-O7w" secondAttribute="trailing" id="XyX-tS-Vpj"/>
+                        <constraint firstItem="ls5-F1-l2B" firstAttribute="top" secondItem="aJN-mM-Ep1" secondAttribute="bottom" constant="25" id="ekj-Ph-17m"/>
+                        <constraint firstItem="aJN-mM-Ep1" firstAttribute="leading" secondItem="3wo-5f-sr4" secondAttribute="leading" id="fAB-HC-WXs"/>
+                        <constraint firstAttribute="trailing" secondItem="aJN-mM-Ep1" secondAttribute="trailing" id="gGX-mu-826"/>
+                        <constraint firstItem="cWm-Ad-O7w" firstAttribute="top" secondItem="eBf-Bb-TGd" secondAttribute="bottom" constant="8" id="jgk-3C-NsP"/>
+                        <constraint firstItem="ls5-F1-l2B" firstAttribute="leading" secondItem="3wo-5f-sr4" secondAttribute="leading" id="m1N-V3-z5m"/>
+                        <constraint firstItem="eBf-Bb-TGd" firstAttribute="leading" secondItem="3wo-5f-sr4" secondAttribute="leading" id="qf4-ch-2Bc"/>
+                        <constraint firstAttribute="height" constant="178" id="vDP-BS-HXy"/>
+                        <constraint firstItem="cWm-Ad-O7w" firstAttribute="leading" secondItem="3wo-5f-sr4" secondAttribute="leading" id="zPc-Qb-n8e"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="3wo-5f-sr4" secondAttribute="trailing" id="Hnj-o7-dOS"/>
+                <constraint firstItem="3wo-5f-sr4" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Mqa-Yh-djA"/>
+                <constraint firstItem="yEz-Nq-dSS" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="eCl-KD-GtH"/>
+                <constraint firstAttribute="bottom" secondItem="yEz-Nq-dSS" secondAttribute="bottom" id="gwT-68-dRS"/>
+                <constraint firstAttribute="trailing" secondItem="yEz-Nq-dSS" secondAttribute="trailing" id="oul-NW-Po1"/>
+                <constraint firstItem="3wo-5f-sr4" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="zvc-0z-s4W"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="dataPicker" destination="yEz-Nq-dSS" id="OdK-Do-6iu"/>
+                <outlet property="dayValue" destination="eBf-Bb-TGd" id="2Iq-vi-5aZ"/>
+                <outlet property="monthValue" destination="ls5-F1-l2B" id="0wa-QX-SPI"/>
+                <outlet property="weekValue" destination="aJN-mM-Ep1" id="HeW-O8-YAp"/>
+                <outlet property="yearValue" destination="cWm-Ad-O7w" id="Wyf-BC-eT7"/>
+            </connections>
+            <point key="canvasLocation" x="176" y="81"/>
+        </view>
+    </objects>
+</document>

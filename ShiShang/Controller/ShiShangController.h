@@ -6,18 +6,18 @@
 //  Copyright (c) 2014年 wlpiaoyi. All rights reserved.
 //
 
-#import "BaseController.h"
+#import "VertivalController.h"
 #import "ShiShangTopView.h"
 #import "Common+Expand.h"
 #import "SkinDictionary.h"
-#import "UIView+AutoRect.h"
 
 #define SSCON_TOP 44.0f
 #define SSCON_BUTTOM 44.0f
 #define SSCON_TIT 30.0f
 
-@interface ShiShangController : BaseController
+@interface ShiShangController : VertivalController
 @property (nonatomic,strong,readonly) ShiShangTopView *topView;
 @property (nonatomic,assign,readonly) SkinDictionary *dicskin;
--(void) showReturnButton:(BOOL) flag;
+-(void) setHiddenCloseButton:(BOOL) hidden;
+-(void) setHiddenTopView:(BOOL) hidden;
 @end

@@ -10,8 +10,7 @@
 #import "OrderCollectionViewCell.h"
 #import "OrderHeadCollectionViewCell.h"
 #import "ScrollViewOpt.h"
-#import "EMAsyncImageView.h"
-#import "VendorMoveView.h"
+#import "AsyncImageView.h"
 #import "BuyOrderCartView.h"
 #import "EntityFood.h"
 #import "FoodService.h"
@@ -43,7 +42,6 @@ NSString *const KeyDatas = @"datas";
     
     [super viewDidLoad];
     [self setTitle:@"下单"];
-    [self showReturnButton:NO];
     
     foodService = [FoodService new];
     
@@ -60,7 +58,7 @@ NSString *const KeyDatas = @"datas";
     _viewHeadImage = [ScrollViewOpt new];
     CGRect r = _viewHead.frame;
     r.origin.x = r.origin.y = 0;
-    r.size.width = APP_W;
+    r.size.width = appWidth();
     _viewHeadImage.frame = r;
     [_viewHead addSubview:_viewHeadImage];
     
@@ -74,10 +72,11 @@ NSString *const KeyDatas = @"datas";
     __weak typeof (self) weakself = self;
     [self setSELShowKeyBoardStart:^{
     } End:^(CGRect keyBoardFrame) {
-        CGRect r = [Common getAbsoluteRect:weakself.viewCartOpt.viewShow relativelyView:weakself.navigationController.view];
-        float offy = keyBoardFrame.origin.y-(r.origin.y+r.size.height);
+        CGPoint p = [weakself.viewCartOpt.viewShow getAbsoluteOrigin:weakself.view];
+        float offy = appHeight()-keyBoardFrame.size.height-(p.y+weakself.viewCartOpt.viewShow.frameHeight);
         if (offy<0) {
-            r = weakself.view.frame;
+            CGRect r = weakself.view.frame;
+            r.origin.x = 0;
             r.origin.y = offy;
             [UIView animateWithDuration:0.25f animations:^{
                 weakself.view.frame = r;
@@ -110,14 +109,15 @@ NSString *const KeyDatas = @"datas";
 -(void) viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     CGRect r = self.view.frame;
-    r.size.height = APP_H-SSCON_BUTTOM;
+    r.size.height = appHeight()-SSCON_BUTTOM;
     self.view.frame = r;
+    [self reloadData];
 }
 -(void) onclickShowCart{
     _viewCartOpt = [[[NSBundle mainBundle] loadNibNamed:@"BuyOrderCartView" owner:self options:nil] lastObject];
     [_viewCartOpt setBackgroundColor:[UIColor clearColor]];
     [_viewCartOpt setViewSuper:self.view];
-    [_viewCartOpt setAnimation:PopUpVendorViewAnimationNone];
+    [_viewCartOpt setAnimation:PopUpMovableViewAnimationNone];
     [_viewCartOpt setFlagTouchHidden:NO];
     [_viewCartOpt setFlagBackToCenter:NO];
     CGRect r = self.viewCart.frame;
@@ -127,7 +127,7 @@ NSString *const KeyDatas = @"datas";
     
     
     __weak typeof(self) weakself = self;
-    [_viewCartOpt setAfterShow:^(PopUpVendorView *vmv) {
+    [_viewCartOpt setAfterShow:^(PopUpMovableView *vmv) {
         weakself.viewCart.alpha = 0;
         CGRect r = weakself.viewCartOpt.viewShow.frame;
         if (r.origin.x<0||r.origin.y<0||r.origin.x>weakself.view.frame.size.width-r.size.width||r.origin.y>weakself.view.frame.size.height-r.size.height) {
@@ -141,7 +141,7 @@ NSString *const KeyDatas = @"datas";
             }];
         }
     }];
-    [_viewCartOpt setBeforeClose:^(PopUpVendorView *vmv) {
+    [_viewCartOpt setBeforeClose:^(PopUpMovableView *vmv) {
         weakself.viewCart.alpha = 1;
         CGRect r = weakself.viewCartOpt.viewShow.frame;
         r.size = weakself.viewCart.frame.size;
@@ -161,7 +161,7 @@ NSString *const KeyDatas = @"datas";
 -(void) setArrayData:(NSMutableArray *)arrayData{
     
     _arrayData = [NSMutableArray new];
-    if(!arrayData||![arrayData count]){
+    if(!arrayData){
         return;
     }
     [self setCategroyArrayData:arrayData];
@@ -174,14 +174,16 @@ NSString *const KeyDatas = @"datas";
     for (EntityFood *ef in arrayData) {
         if (!type) {
             type = (ef.type?ef.type:@"unkwon");
-            [_arrayData addObject:@{KeyFoodType:type}];
         }
         if ([ef.type isEqualToString:type]) {
             [array addObject:ef];
         }
     }
     [arrayData removeObjectsInArray:array];
-    [_arrayData addObject:array];
+    if (type) {
+        [_arrayData addObject:@{KeyFoodType:type}];
+        [_arrayData addObject:array];
+    }
     if ([arrayData count]) {
         [self setCategroyArrayData:arrayData];
     }
@@ -192,7 +194,7 @@ NSString *const KeyDatas = @"datas";
     [_viewHeadImage removeAllViews];
     for (NSDictionary *json in _arrayHead) {
         NSString *imageUrl = [json objectForKey:KeyOrderHeadImage];
-        EMAsyncImageView *imageview = [EMAsyncImageView new];
+        AsyncImageView *imageview = [AsyncImageView new];
         imageview.frame = CGRectMake(0, 0, _viewHeadImage.frame.size.width, _viewHeadImage.frame.size.height);
         [imageview setContentMode:UIViewContentModeScaleAspectFit];
         imageview.imageUrl = imageUrl;
@@ -202,8 +204,8 @@ NSString *const KeyDatas = @"datas";
 
 //==>UICollectionViewDelegate
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
-    CGRect r = [Common getAbsoluteRect:[collectionView cellForItemAtIndexPath:indexPath] relativelyView:self.view];
-    r.origin.y = r.origin.y-collectionView.contentOffset.y;
+    CGPoint p = [[collectionView cellForItemAtIndexPath:indexPath] getAbsoluteOrigin:self.view];
+    p.y = p.y-collectionView.contentOffset.y;
     
     if (![self isHead:indexPath.section]) {
         NSArray *array = [_arrayData objectAtIndex:indexPath.section];
@@ -317,7 +319,7 @@ NSString *const KeyDatas = @"datas";
     return off;
 }
 -(float) getAvgValue{
-    return APP_W<400?3.0f:4.0f;
+    return appWidth()<400?3.0f:4.0f;
 }
 
 -(BOOL) resignFirstResponder{

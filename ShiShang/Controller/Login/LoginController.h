@@ -6,7 +6,7 @@
 //  Copyright (c) 2014年 wlpiaoyi. All rights reserved.
 //
 
-#import "ShiShangController.h"
+#import "ShiShangNavController.h"
 
-@interface LoginController : ShiShangController<UITextFieldDelegate>
+@interface LoginController : ShiShangNavController<UITextFieldDelegate>
 @end

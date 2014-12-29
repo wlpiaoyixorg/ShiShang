@@ -17,14 +17,14 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AIx-EF-Qcr" customClass="NavigationScrollView">
-                    <rect key="frame" x="0.0" y="74" width="320" height="450"/>
+                    <rect key="frame" x="0.0" y="74" width="320" height="494"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                 </scrollView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="AIx-EF-Qcr" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="QBs-z5-SI8"/>
-                <constraint firstAttribute="bottom" secondItem="AIx-EF-Qcr" secondAttribute="bottom" constant="44" id="cai-Wy-560"/>
+                <constraint firstAttribute="bottom" secondItem="AIx-EF-Qcr" secondAttribute="bottom" id="cai-Wy-560"/>
                 <constraint firstAttribute="trailing" secondItem="AIx-EF-Qcr" secondAttribute="trailing" id="mJ9-1A-aI5"/>
                 <constraint firstItem="AIx-EF-Qcr" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="74" id="vQC-OY-0fq"/>
             </constraints>

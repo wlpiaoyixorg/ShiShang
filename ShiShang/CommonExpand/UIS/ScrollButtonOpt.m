@@ -82,9 +82,9 @@
 -(UIImage*) getButtonImageByTitle:(NSString*) title fontName:(NSString*) fontName fontSize:(float) fontSize color:(UIColor*) color size:(CGSize) size{
     int pxv = 2;
     float fs = fontSize*pxv;
-    float fh = [Common getFontHeight:fontName Size:fs]*0.85;
+    float fh = [Utils getFontHeightWithSize:fs fontName:fontName]*0.85;
     UIFont *font = [UIFont fontWithName:fontName size:fs];
-    float width = [Common getBoundingRectWithSize:title font:font size:CGSizeMake(999, fh)].width;
+    float width = [Utils getBoundSizeWithTxt:title font:font size:CGSizeMake(999, fh)].width;
     CGRect rectcxt = CGRectMake(0, 0, size.width*pxv, size.height*pxv);
     CGPoint pointg = CGPointMake((size.width*pxv-width)/2, (size.height*pxv-fh)/2);
     

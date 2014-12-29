@@ -19,9 +19,9 @@
 
 -(void) showMsgIfNeed:(NSDataResult*) resulte{
     if (resulte&&resulte.code!=200) {
-        [Common showMessage:(NSString*)resulte.data Title:nil];
+        [Utils showAlert:(NSString*)resulte.data title:nil];
     }else if (!resulte){
-        [Common showMessage:NSLocalizedString(@"net_faild", nil) Title:nil];
+        [Utils showAlert:NSLocalizedString(@"net_faild", nil) title:nil];
     }
 }
 

@@ -26,14 +26,14 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     _viewButtom = [ScrollButtonOpt new];
-    _viewButtom.frame = CGRectMake(0, 0, APP_W, 44);
+    _viewButtom.frame = CGRectMake(0, 0, appWidth(), 44);
     _viewButtom.values = @[@"下单",@"管理",@"消息",@"数据"];
     _viewButtom.backgroundColor = [UIColor redColor];
     [_viewButtom autoresizingMask_TLR];
     [self.viewMain addSubview:_viewButtom];
     _viewOpt = [NavigationScrollView new];
     _viewOpt.backgroundColor = [UIColor clearColor];
-    _viewOpt.frame = CGRectMake(0, 0, APP_W, APP_H-44);
+    _viewOpt.frame = CGRectMake(0, 0, appWidth(), appHeight()-44);
     [self.viewMain addSubview:_viewOpt];
     // Do any additional setup after loading the view from its nib.
     
@@ -60,7 +60,7 @@
     CGRect r = _viewButtom.frame;
     r.origin.y = self.viewMain.frame.size.height - r.size.height;
     _viewButtom.frame = r;
-    _viewButtom.showIndex = 4;
+    _viewButtom.showIndex = 0;
 
 }
 - (void)didReceiveMemoryWarning {

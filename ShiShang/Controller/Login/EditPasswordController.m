@@ -11,6 +11,7 @@
 #import "EntityUser.h"
 
 @interface EditPasswordController ()
+
 @property (nonatomic) CGRect rectKeyBorde;
 @property (strong, nonatomic) UserService *userService;
 @property (strong, nonatomic) IBOutlet UIView *viewValidate;
@@ -27,8 +28,9 @@
 @implementation EditPasswordController
 
 - (void)viewDidLoad {
-    [super setTitle:@"重置/修改密码"];
     [super viewDidLoad];
+    [super setTitle:@"重置/修改密码"];
+    [self.navigationController setNavigationBarHidden:NO];
     _userService = [UserService new];
     
     [_viewValidate setCornerRadiusAndBorder:5 BorderWidth:0.5 BorderColor:[self.dicskin getSkinColor:@"bordercolordefault"]];
@@ -43,6 +45,7 @@
     _viewPassowrd.backgroundColor = [[SkinDictionary getSingleInstance] getSkinColor:@"textfiledview_bg_color"];
     _viewValidate.backgroundColor = [[SkinDictionary getSingleInstance] getSkinColor:@"textfiledview_bg_color"];
     
+    [super setRightButtonName:@"完成" action:@selector(onclickEdit)];
     [_buttonConfirm addTarget:self action:@selector(onclickEdit)];
     
     _textFiledPassword.delegate =
@@ -72,7 +75,7 @@
         
     } End:^(CGRect keyBoardFrame) {
         CGRect r = weakself.view.frame;
-        r.origin.y = 0;
+        r.origin.y = navigationBarHeight;
         weakself.view.frame = r;
         
     }];

@@ -7,7 +7,6 @@
 //
 
 #import "NavigationScrollView.h"
-#import "UIView+AutoRect.h"
 #import "Common+Expand.h"
 @implementation NavigationScrollView
 -(void) setArrayControllers:(NSArray *)arrayControllers{

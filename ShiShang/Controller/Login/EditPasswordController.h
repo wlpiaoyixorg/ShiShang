@@ -6,8 +6,8 @@
 //  Copyright (c) 2014年 wlpiaoyi. All rights reserved.
 //
 
-#import "ShiShangController.h"
+#import "ShiShangNavController.h"
 
-@interface EditPasswordController : ShiShangController<UITextFieldDelegate>
+@interface EditPasswordController : ShiShangNavController<UITextFieldDelegate>
 
 @end

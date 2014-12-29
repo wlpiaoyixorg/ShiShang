@@ -16,6 +16,7 @@
     
 }
 
+
 @property (nonatomic) CGRect rectViewFiled;;
 
 @property (strong, nonatomic) IBOutlet UIView *viewField;
@@ -34,9 +35,9 @@
 @implementation LoginController
 
 - (void)viewDidLoad {
-    [self setTitle:@"登  录"];
     [super viewDidLoad];
-    [super showReturnButton:NO];
+    [self setTitle:@"登  录"];
+    [self.navigationController setNavigationBarHidden:NO];
     _userService = [UserService new];
     
     
@@ -52,14 +53,12 @@
     
     __weak typeof(self) weakself = self;
     [super setSELShowKeyBoardStart:^{
-        weakself.viewField.frame = weakself.rectViewFiled;
     } End:^(CGRect keyBoardFrame) {
-        CGRect r = weakself.rectViewFiled;
-        float offy = r.origin.y+r.size.height-keyBoardFrame.origin.y;
+        CGPoint p = [weakself.viewField getAbsoluteOrigin:[Utils getWindow]];
+        float offy = p.y+weakself.rectViewFiled.size.height-keyBoardFrame.origin.y;
         if (offy > 0) {
-            r.origin.y -= offy;
+            weakself.viewField.frameY = weakself.rectViewFiled.origin.y-offy;
         }
-        weakself.viewField.frame = r;
     }];
     [super setSELHiddenKeyBoardBefore:^{
         
@@ -70,8 +69,8 @@
     
     // Do any additional setup after loading the view from its nib.
 }
--(void) viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:animated];
+-(void) viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
     _rectViewFiled = _viewField.frame;
     NSString *userName = [ConfigManage getUserName];
     NSString *password = [ConfigManage getPassword];
@@ -81,6 +80,7 @@
         [self onclickLogin];
     }
 }
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -98,32 +98,28 @@
     NSString *password = self.textFieldPassword.text;
     
     if (![NSString isEnabled:userName]) {
-        PopUpDialogView *pdv = [PopUpDialogView initWithTitle:@"提示" message:@"请输入手机号!" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
-        [pdv show];
+        [Utils showAlert:@"请输入手机号!" title:nil];
         return;
     }
     if (![NSString isEnabled:password]) {
-        PopUpDialogView *pdv = [PopUpDialogView initWithTitle:@"提示" message:@"请输入密码!" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
-        [pdv show];
+        [Utils showAlert:@"请输入密码!" title:nil];
         return;
     }
-    [ActivityIndicatorView showActivityIndicator:nil];
+    [Utils showLoading:nil];
     
     [ConfigManage setUserName:userName];
     [ConfigManage setPassword:password];
     [_userService loginWithUserName:userName password:password success:^(id data, NSDictionary *userInfo) {
-        [ActivityIndicatorView hideActivityIndicator];
-        if (!data) {
-            [Common showMessage:@"数据异常" Title:nil];
+        [Utils hiddenLoading];
+        if (data) {
+            [Utils setShiShangController:[[MainController alloc] initWithNibName:@"MainController" bundle:nil]];
         }else{
-            [ConfigManage setLoginUser:data];
-            [Common setNavigationController: [[MainController alloc] initWithNibName:@"MainController" bundle:nil] window:[Common getWindow]];
-            [Common setNavigationBarHidden:NO];
-            [Common getWindow].backgroundColor = [[SkinDictionary getSingleInstance] getSkinColor:@"window_bg_color"];
+            [ConfigManage setPassword:nil];
+            [self.textFieldPassword setText:@""];
         }
     } faild:^(id data, NSDictionary *userInfo) {
-        [ActivityIndicatorView hideActivityIndicator];
-        [Common showMessage:@"无法连接服务器" Title:@""];
+        [Utils hiddenLoading];
+        [Utils showAlert:@"无法连接服务器" title:@""];
         
     }];
 }

@@ -5,8 +5,9 @@
 //  Created by wlpiaoyi on 14/12/2.
 //  Copyright (c) 2014年 wlpiaoyi. All rights reserved.
 //
-#import "NSString+Convenience.h"
+
 #import "ConfigManage+Expand.h"
+#import "NSString+Expand.h"
 
 #define KEYUSERNAME @"adfasdfdf"
 #define KEYPASSWORD @"adsfasdfafd"
