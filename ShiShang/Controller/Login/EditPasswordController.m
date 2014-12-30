@@ -111,7 +111,6 @@
     smsVerification = [_userService smsVerificationUpadatePasswordWithPhone:_phone success:^(id data, NSDictionary *userInfo) {
         [Utils showAlert:@"已发送" title:nil];
     }];
-    
 }
 -(int) verificationUpdatePassword:(NSString**) password phone:(NSString**) phone{
     NSString* _phone = _textFiledPhone.text;

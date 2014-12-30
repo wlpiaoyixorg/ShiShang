@@ -12,5 +12,6 @@
 @property (nonatomic,strong) NSMutableArray *arrayData;
 @property (nonatomic,strong) NSString *deskCode;
 @property (nonatomic,readonly) NSNumber *totalPrice;
+-(void) addOrderTarget:(id) target action:(SEL) action;
 -(void) reloadData;
 @end

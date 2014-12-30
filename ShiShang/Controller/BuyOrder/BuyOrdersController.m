@@ -62,7 +62,6 @@ NSString *const KeyDatas = @"datas";
     _viewHeadImage.frame = r;
     [_viewHead addSubview:_viewHeadImage];
     
-    _viewCart.exclusiveTouch = YES;
     [_viewCart addTarget:self action:@selector(onclickShowCart)];
     [_viewCart removeFromSuperview];
     [self.view addSubview:_viewCart];
@@ -150,6 +149,7 @@ NSString *const KeyDatas = @"datas";
     }];
     
     self.viewCartOpt.arrayData = self.orderData;
+    [self.viewCartOpt addOrderTarget:self action:@selector(onclickOrderAdd)];
     [self.viewCartOpt reloadData];
     [self.viewCartOpt show];
     
@@ -200,6 +200,9 @@ NSString *const KeyDatas = @"datas";
         imageview.imageUrl = imageUrl;
         [_viewHeadImage addSubview:imageview];
     }
+}
+-(void) onclickOrderAdd{
+    [self.viewCartOpt close];
 }
 
 //==>UICollectionViewDelegate

@@ -16,6 +16,9 @@
 #define URL_FOODADD @"restful/product/add"
 #define URL_FOODUPDATE @"restful/product/update"
 #define URL_FOODDELETE @"restful/product/delete"
+
+#define URL_ORDERADD @"restful/order/add"
+
 #import "FoodService.h"
 #import "Common+Expand.h"
 #import "EntityFood.h"

@@ -12,10 +12,15 @@
 #import "EntityFood.h"
 
 @interface BuyOrderCartView()
+
+@property (assign, nonatomic) id target;
+@property (assign, nonatomic) SEL action;
+
 @property (strong, nonatomic) IBOutlet UITableView *tableViewMenu;
 @property (strong, nonatomic) IBOutlet UILabel *lableTotal;
 @property (strong, nonatomic) IBOutlet UITextField *textFieldDesk;
 @property (strong, nonatomic) IBOutlet UIButton *buttonClose;
+@property (strong, nonatomic) IBOutlet UIButton *buttonOrderAdd;
 
 
 @end
@@ -41,6 +46,16 @@
 }
 -(void) setArrayData:(NSMutableArray *) arrayData{
     _arrayData = arrayData;
+}
+
+-(void) addOrderTarget:(id) target action:(SEL) action{
+    if (self.target) {
+        [self.buttonOrderAdd removeTarget:self.target action:self.action forControlEvents:UIControlEventTouchUpInside];
+    }
+    self.target = target;
+    self.action = action;
+    [self.buttonOrderAdd addTarget:target action:action];
+    
 }
 //==> UITableViewDelegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
