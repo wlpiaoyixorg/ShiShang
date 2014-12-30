@@ -15,4 +15,5 @@
 -(void) loginWithUserName:(NSString*) userName password:(NSString*) password success:(CallBackHttpUtilRequest) success faild:(CallBackHttpUtilRequest) faild;
 -(void) exitLogin;
 -(void) regesiterWithUser:(EntityUser*) user success:(CallBackHttpUtilRequest) success faild:(CallBackHttpUtilRequest) faild;
+-(int) smsVerificationWithPhone:(NSString*) phone success:(CallBackHttpUtilRequest) success;
 @end

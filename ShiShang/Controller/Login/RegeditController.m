@@ -12,6 +12,7 @@
 
 @interface RegeditController (){
     CGRect rectLogin;
+    int smsRandom;
 }
 
 @property (nonatomic) CGRect rectKeyBorde;
@@ -42,6 +43,7 @@
 @implementation RegeditController
 
 - (void)viewDidLoad {
+    smsRandom = -1;
     [super viewDidLoad];
     [super setTitle:@"注 册"];
     [super setRightButtonName:@"完成" action:@selector(onclickRegedit)];
@@ -60,7 +62,7 @@
     
     [_buttonRegedit addTarget:self action:@selector(onclickRegedit)];
     [_buttonInfo addTarget:self action:@selector(onclickInfo)];
-    
+    [_buttonValidate addTarget:self action:@selector(onclickSmsVerification)];
     
     _textFieldEmail.delegate =
     _textFieldNikeName.delegate =
@@ -132,6 +134,28 @@
 
 -(void) onclickRegedit{
     [self resignFirstResponder];
+    EntityUser *user;
+    int verification = [self regesitVerification:&user];
+    if (verification!=1) {
+        if (verification==0) {
+            [Utils showAlert:@"验证码不对!" title:nil];
+        }
+        return;
+    }
+    [Utils showLoading:nil];
+    [_userService regesiterWithUser:user success:^(id data, NSDictionary *userInfo) {
+        [Utils hiddenLoading];
+        [[PopUpDialogVendorView alertWithMessage:@"注册成功！" title:@"提示" onclickBlock:^(PopUpDialogVendorView *dialogView, NSInteger buttonIndex) {
+            [self backPreviousController];
+        } buttonNames:@"确定",nil] show];
+    } faild:^(id data, NSDictionary *userInfo) {
+        [Utils hiddenLoading];
+    }];
+    
+}
+-(int) regesitVerification:(EntityUser**) _user{
+    
+    [self resignFirstResponder];
     EntityUser *user = [EntityUser new];
     user.loginName = _textFieldUserName.text;
     user.phoneNumber = user.loginName;
@@ -140,30 +164,39 @@
     if ([NSString isEnabled:_textFieldNikeName.text]) {
         user.name = _textFieldNikeName.text;
     }
-    
+    user.name = user.loginName;
     if (![NSString isEnabled:user.phoneNumber]) {
         [Utils showAlert:@"请输入手机号!" title:nil];
-        return;
+        return -1;
     }
     if (![NSString isEnabled:user.plainPassword]) {
         [Utils showAlert:@"请输入密码!" title:nil];
-        return;
+        return -1;
     }
     if (![NSString isEnabled:passowrd2]) {
         [Utils showAlert:@"请确认密码!" title:nil];
-        return;
+        return -1;
     }
     if(![user.plainPassword isEqualToString:passowrd2]){
         [Utils showAlert:@"两次密码出入不一致!" title:nil];
+        return -1;
+    }
+    *_user = user;
+    NSString* smsValue = _textFieldValidate.text;
+    if (![NSString isEnabled:smsValue]||smsValue.intValue!=smsRandom) {
+        return  0;
+    }
+    return 1;
+}
+-(void) onclickSmsVerification{
+    _textFieldValidate.text = @"";
+    EntityUser *user;
+    if ([self regesitVerification:&user]==-1) {
         return;
     }
-    user.name = user.loginName;
-    [_userService regesiterWithUser:user success:^(id data, NSDictionary *userInfo) {
-        
-    } faild:^(id data, NSDictionary *userInfo) {
-        
+    smsRandom =  [self.userService smsVerificationWithPhone:user.phoneNumber success:^(id data, NSDictionary *userInfo) {
+        [Utils showAlert:@"已发送" title:nil];
     }];
-    
 }
 
 - (void)didReceiveMemoryWarning {

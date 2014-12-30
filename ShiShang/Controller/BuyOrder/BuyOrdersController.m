@@ -24,7 +24,7 @@ NSString *const KeyDatas = @"datas";
 @interface BuyOrdersController (){
     FoodService *foodService;
 }
-@property (strong, nonatomic) IBOutlet VendorMoveView *viewCart;
+@property (strong, nonatomic) IBOutlet MovableView *viewCart;
 @property (strong, nonatomic) BuyOrderCartView *viewCartOpt;
 @property (nonatomic) CGRect *rectCartOpt;
 @property (strong, nonatomic) IBOutlet UIView *viewHead;

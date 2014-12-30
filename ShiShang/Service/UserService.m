@@ -11,7 +11,7 @@
 
 #import "UserService.h"
 #import "Common+Expand.h"
-
+#import "HttpUtilRequest.h"
 
 @implementation UserService
 -(void) excuteLoginSuccess:(CallBackHttpUtilRequest) success json:(NSDataResult*) resulte {
@@ -100,6 +100,32 @@
     }];
     [nwh requestPOST:[user toJson]];
     
+}
+
+-(int) smsVerificationWithPhone:(NSString*) phone success:(CallBackHttpUtilRequest) success{
+    
+    [Utils showLoading:@"短信发送中..."];
+    id<HttpUtilRequestDelegate> nwh = [HttpUtilRequest new];
+    [nwh setHttpEncoding:NSUTF8StringEncoding];
+    NSString *url = @"http://106.ihuyi.com/webservice/sms.php?method=Submit";
+    [nwh setRequestString:url];
+    [nwh setUserInfo:@{@"success":success}];
+    [nwh setSuccessCallBack:^(id data, NSDictionary *userInfo) {
+        [Utils hiddenLoading];
+        CallBackHttpUtilRequest success = [userInfo objectForKey:@"success"];
+        if (success) {
+            success(nil,nil);
+        }
+        
+    }];
+    [nwh setFaildCallBack:^(id data, NSDictionary *userInfo) {
+        [Utils hiddenLoading];
+        [Utils showAlert:NSLocalizedString(@"net_faild", nil) title:nil];
+    }];
+    int num = random()%1000000;
+    NSString *content = [NSString stringWithFormat:NSLocalizedString(@"regesit_SMS_verification", ),num];
+    [nwh requestPOST:@{@"account":@"cf_shang",@"password":@"20140818js",@"mobile":phone,@"content":content}];
+    return num;
 }
 
 @end
