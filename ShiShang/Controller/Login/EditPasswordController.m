@@ -10,7 +10,9 @@
 #import "UserService.h"
 #import "EntityUser.h"
 
-@interface EditPasswordController ()
+@interface EditPasswordController (){
+    int smsVerification;
+}
 
 @property (nonatomic) CGRect rectKeyBorde;
 @property (strong, nonatomic) UserService *userService;
@@ -32,7 +34,7 @@
     [super setTitle:@"重置/修改密码"];
     [self.navigationController setNavigationBarHidden:NO];
     _userService = [UserService new];
-    
+    smsVerification = -1;
     [_viewValidate setCornerRadiusAndBorder:5 BorderWidth:0.5 BorderColor:[self.dicskin getSkinColor:@"bordercolordefault"]];
     [_textFiledValidate setCornerRadiusAndBorder:0 BorderWidth:0.5 BorderColor:[self.dicskin getSkinColor:@"bordercolordefault"]];
     [_textFiledPhone setCornerRadiusAndBorder:5 BorderWidth:0.5 BorderColor:[self.dicskin getSkinColor:@"bordercolordefault"]];
@@ -47,6 +49,7 @@
     
     [super setRightButtonName:@"完成" action:@selector(onclickEdit)];
     [_buttonConfirm addTarget:self action:@selector(onclickEdit)];
+    [_buttonValidate addTarget:self action:@selector(onclickVerification)];
     
     _textFiledPassword.delegate =
     _textFiledPassword2.delegate =
@@ -84,7 +87,57 @@
 
 -(void) onclickEdit{
     [self resignFirstResponder];
+    NSString *password;
+    NSString *phone;
+    if ([self verificationUpdatePassword:&password phone:&phone]==1) {
+        [Utils showLoading:nil];
+        [_userService updatePassword:password phone:phone success:^(id data, NSDictionary *userInfo) {
+            [Utils hiddenLoading];
+            [[PopUpDialogVendorView alertWithMessage:@"操作成功！" title:@"提示" onclickBlock:^(PopUpDialogVendorView *dialogView, NSInteger buttonIndex) {
+                [self backPreviousController];
+            } buttonNames:@"确定",nil] show];
+        } faild:^(id data, NSDictionary *userInfo) {
+            [Utils hiddenLoading];
+        }];
+    }
+}
+-(void) onclickVerification{
+    [self resignFirstResponder];
+    NSString* _phone = _textFiledPhone.text;
+    if (![NSString isEnabled:_phone]) {
+        [Utils showAlert:@"请输入手机号！" title:nil];
+        return;
+    }
+    smsVerification = [_userService smsVerificationUpadatePasswordWithPhone:_phone success:^(id data, NSDictionary *userInfo) {
+        [Utils showAlert:@"已发送" title:nil];
+    }];
     
+}
+-(int) verificationUpdatePassword:(NSString**) password phone:(NSString**) phone{
+    NSString* _phone = _textFiledPhone.text;
+    NSString *_password1 = _textFiledPassword.text;
+    NSString *_password2 = _textFiledPassword2.text;
+    if (![NSString isEnabled:_phone]) {
+        [Utils showAlert:@"请输入手机号！" title:nil];
+        return -1;
+    }
+    if (![NSString isEnabled:_password1]) {
+        [Utils showAlert:@"请输入密码！" title:nil];
+        return -1;
+    }
+    if (![NSString isEnabled:_password2]) {
+        [Utils showAlert:@"请确认密码！" title:nil];
+        return -1;
+    }
+    if (![_password1 isEqualToString:_password1]) {
+        [Utils showAlert:@"两次密码出入不一致!" title:nil];
+        return -1;
+    }
+    if (smsVerification!=[_textFiledValidate.text intValue]) {
+        [Utils showAlert:@"验证码不对!" title:nil];
+        return -1;
+    }
+    return 1;
 }
 
 #pragma ==> <UITextFieldDelegate>

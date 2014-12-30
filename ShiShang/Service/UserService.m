@@ -8,6 +8,7 @@
 
 #define URL_LOGIN @"restful/customer/login"
 #define URL_REGESTER @"restful/customer/register"
+#define URL_UPDATEPASSWORD @"restful/customer/updatePassword"
 
 #import "UserService.h"
 #import "Common+Expand.h"
@@ -77,32 +78,22 @@
         CallBackHttpUtilRequest success = [userInfo objectForKey:@"success"];
         NSDataResult *result;
         if ([self isSuccessResult:&result data:data]) {
-            NSString *key = KEY_CACHE_HTTP_UEL(URL_LOGIN);
-            [ConfigManage setConfigValueByUser:[result JSONRepresentation] Key:key];
         }
         if (success) {
             success(result.data,userInfo);
         }
     }];
     [nwh setFaildCallBack:^(id data, NSDictionary *userInfo) {
-        CallBackHttpUtilRequest success = [userInfo objectForKey:@"success"];
         CallBackHttpUtilRequest faild = [userInfo objectForKey:@"faild"];
-        NSString *key = KEY_CACHE_HTTP_UEL(URL_LOGIN);
-        NSString *cache = [ConfigManage getConfigValueByUser:key];
-        NSDataResult *result;
-        if ([NSString isEnabled:cache]&&[self isSuccessResult:&result data:[cache JSONValue]]) {
-            success(result.data,userInfo);
-        }else{
-            faild(data,userInfo);
-            [Utils showAlert:NSLocalizedString(@"net_faild", nil) title:nil];
-        }
+        faild(data,userInfo);
+        [Utils showAlert:NSLocalizedString(@"net_faild", nil) title:nil];
         
     }];
     [nwh requestPOST:[user toJson]];
     
 }
 
--(int) smsVerificationWithPhone:(NSString*) phone success:(CallBackHttpUtilRequest) success{
+-(int) smsVerificationRegesiterWithPhone:(NSString*) phone success:(CallBackHttpUtilRequest) success{
     
     [Utils showLoading:@"短信发送中..."];
     id<HttpUtilRequestDelegate> nwh = [HttpUtilRequest new];
@@ -124,6 +115,55 @@
     }];
     int num = random()%1000000;
     NSString *content = [NSString stringWithFormat:NSLocalizedString(@"regesit_SMS_verification", ),num];
+    [nwh requestPOST:@{@"account":@"cf_shang",@"password":@"20140818js",@"mobile":phone,@"content":content}];
+    return num;
+}
+
+-(void) updatePassword:(NSString*) password phone:(NSString*) phone success:(CallBackHttpUtilRequest) success faild:(CallBackHttpUtilRequest) faild{
+    id<HttpUtilRequestDelegate> nwh = [Utils getHttpUtilRequest];
+    NSString *url = [NSString stringWithFormat:@"%@/%@",BASEURL,URL_UPDATEPASSWORD];
+    [nwh setRequestString:url];
+    [nwh setUserInfo:@{@"success":success,@"faild":faild,@"url":url}];
+    [nwh setSuccessCallBack:^(id data, NSDictionary *userInfo) {
+        
+        CallBackHttpUtilRequest success = [userInfo objectForKey:@"success"];
+        NSDataResult *result;
+        if ([self isSuccessResult:&result data:data]) {
+        }
+        if (success) {
+            success(result.data,userInfo);
+        }
+    }];
+    [nwh setFaildCallBack:^(id data, NSDictionary *userInfo) {
+        CallBackHttpUtilRequest faild = [userInfo objectForKey:@"faild"];
+        faild(data,userInfo);
+        [Utils showAlert:NSLocalizedString(@"net_faild", nil) title:nil];
+        
+    }];
+    [nwh requestPOST:@{@"phoneNumber":phone,@"plainPassword":password}];
+}
+-(int) smsVerificationUpadatePasswordWithPhone:(NSString*) phone success:(CallBackHttpUtilRequest) success{
+    
+    [Utils showLoading:@"短信发送中..."];
+    id<HttpUtilRequestDelegate> nwh = [HttpUtilRequest new];
+    [nwh setHttpEncoding:NSUTF8StringEncoding];
+    NSString *url = @"http://106.ihuyi.com/webservice/sms.php?method=Submit";
+    [nwh setRequestString:url];
+    [nwh setUserInfo:@{@"success":success}];
+    [nwh setSuccessCallBack:^(id data, NSDictionary *userInfo) {
+        [Utils hiddenLoading];
+        CallBackHttpUtilRequest success = [userInfo objectForKey:@"success"];
+        if (success) {
+            success(nil,nil);
+        }
+        
+    }];
+    [nwh setFaildCallBack:^(id data, NSDictionary *userInfo) {
+        [Utils hiddenLoading];
+        [Utils showAlert:NSLocalizedString(@"net_faild", nil) title:nil];
+    }];
+    int num = random()%1000000;
+    NSString *content = [NSString stringWithFormat:NSLocalizedString(@"updatePassword_SMS_verification", ),num];
     [nwh requestPOST:@{@"account":@"cf_shang",@"password":@"20140818js",@"mobile":phone,@"content":content}];
     return num;
 }

@@ -145,7 +145,7 @@
     [Utils showLoading:nil];
     [_userService regesiterWithUser:user success:^(id data, NSDictionary *userInfo) {
         [Utils hiddenLoading];
-        [[PopUpDialogVendorView alertWithMessage:@"注册成功！" title:@"提示" onclickBlock:^(PopUpDialogVendorView *dialogView, NSInteger buttonIndex) {
+        [[PopUpDialogVendorView alertWithMessage:@"操作成功！" title:@"提示" onclickBlock:^(PopUpDialogVendorView *dialogView, NSInteger buttonIndex) {
             [self backPreviousController];
         } buttonNames:@"确定",nil] show];
     } faild:^(id data, NSDictionary *userInfo) {
@@ -194,7 +194,7 @@
     if ([self regesitVerification:&user]==-1) {
         return;
     }
-    smsRandom =  [self.userService smsVerificationWithPhone:user.phoneNumber success:^(id data, NSDictionary *userInfo) {
+    smsRandom =  [self.userService smsVerificationRegesiterWithPhone:user.phoneNumber success:^(id data, NSDictionary *userInfo) {
         [Utils showAlert:@"已发送" title:nil];
     }];
 }
